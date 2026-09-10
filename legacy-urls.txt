@@ -1,0 +1,11 @@
+# Addresses the old Blogger site served for the posts that were kept. scripts/check.sh fails if one stops resolving.
+/2011/02/magento-301-redirects.html
+/2012/07/connect-to-wirless-network-through.html
+/2012/07/dirt-cheap-way-to-make-magento-fly.html
+/2012/07/firefox-vs-virtualized-environments.html
+/2012/07/php-offloading-for-better-performance.html
+/2012/07/php-offloading-nginx-helps-so-much.html
+/2012/07/varnish-implementation-hints-and-good.html
+/2012/08/cloning-magento-modules.html
+/2012/08/full-page-cache-with-nginx-and-memcache.html
+/2012/08/zend-queue-with-magento.html

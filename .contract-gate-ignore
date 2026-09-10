@@ -1,0 +1,11 @@
+# Paths this repository declares out of scope for contract-gate.
+#
+# One glob per line, matched against the repository-relative path.
+
+# The PaperMod theme is a git submodule pinned to one upstream commit. Nothing in
+# it is written here, and the gitlink is a directory the secrets lane cannot
+# read, so it fails closed on every commit that moves the pin. credential-guard
+# found nothing across its 125 files at the pinned commit; scan it the same way
+# before trusting this line to cover a new pin.
+themes/PaperMod
+themes/PaperMod/**

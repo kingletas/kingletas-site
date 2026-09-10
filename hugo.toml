@@ -1,0 +1,56 @@
+baseURL = "https://www.kingletas.com/"
+locale = "en-us"
+title = "Luis Tineo"
+theme = "PaperMod"
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  env = "production"
+  description = "Platform and DevOps for Magento and Adobe Commerce: infrastructure, release pipelines, and the tests that prove a deploy worked."
+  author = "Luis Tineo"
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowCodeCopyButtons = true
+  disableSpecial1stPost = true
+
+  [params.homeInfoParams]
+    Title = "Hi, I'm Luis"
+    Content = """
+I build and run the platform under Magento and Adobe Commerce stores: the infrastructure, the release pipeline, and the tooling that proves a deploy worked before a customer finds out it didn't. I've been working in Magento since the 1.x days.
+
+Most of my day is PHP, Python and Ansible. I'm ramping up in Go, Rust and Ruby.
+"""
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/kingletas"
+
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/luistineo/"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "projects"
+    name = "Projects"
+    url = "/projects/"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 30
+
+[markup.goldmark.renderer]
+  unsafe = false
