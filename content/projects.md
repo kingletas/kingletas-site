@@ -16,7 +16,6 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 
 ## Platform and DevOps tools
 
-- **[backsight](https://github.com/kingletas/backsight)** is a Terraform workbench for Linux that shows what a change will do while you write it, before CI does. It's early and not released yet.
 - **[credential-guard](https://github.com/kingletas/credential-guard)** keeps credentials out of git. It scans the working tree and every blob in the history, and installs itself as a pre-commit hook.
 - **[dev-snapshot](https://github.com/kingletas/dev-snapshot)** makes one encrypted, verified archive of a source tree, leaving out everything a package manager can rebuild.
 - **[tooling-sync](https://github.com/kingletas/tooling-sync)** tells an installed command apart from the repository it came from, and shows which one changed.
