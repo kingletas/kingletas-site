@@ -28,7 +28,8 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 - **[engineering-toolkit](https://github.com/kingletas/obsidian-engineering-toolkit)** adds light structure to the engineering docs a vault already holds: ADRs, incidents, infrastructure notes and a decision log.
 - **[jira-autolink](https://github.com/kingletas/obsidian-jira-autolink)** turns `PROJ-123` into a link to your Jira, with an optional hover preview of the issue.
 
-## Reading tools
+## Desktop apps
 
 - **[solander](https://github.com/kingletas/solander)** opens an Obsidian vault on Ubuntu and never writes into it. Wikilinks, callouts, canvases and Dataview render as themselves, with no plugins, no scripts and no network.
 - **[ariadne](https://github.com/kingletas/ariadne)** builds a book's cast as you read and never shows you anyone past your bookmark. It works offline on epubs you own. It's early, and it needs readers.
+- **[cairn](https://github.com/kingletas/cairn)** keeps every job application you're chasing in one list and screens the job feeds you turn on against what you want. Everything stays in one encrypted file on your machine: no account, no server, no sync.
