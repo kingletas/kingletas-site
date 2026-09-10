@@ -7,16 +7,28 @@ hideMeta: true
 
 Everything here is open source and on [GitHub](https://github.com/kingletas).
 
-## Magento tooling
+## Magento performance
+
+- **[manipulus](https://github.com/kingletas/manipulus)** works out which RequireJS modules each Magento 2 page type loads, straight from the codebase, and bundles them. No browser, no Node, no running store. Its walkthrough takes a real store from 226 JavaScript requests to 15.
+- **[section-policy](https://github.com/kingletas/magento2-module-section-policy)** decides what a private-content invalidation actually invalidates, and reports what each action costs. On a stock store, logging in refetches every customer section, including a 59 KB country list that's identical for every visitor.
+- **[cache-vary](https://github.com/kingletas/magento2-module-cache-vary)** decides what goes into the full-page-cache key, and reports how many copies of each page it allows. It keeps customer segments out of the Varnish hash when nothing cached depends on them, since each active segment can double the copies of every page.
+- **[process-guard](https://github.com/kingletas/magento2-module-process-guard)** times every observer on the hot paths — order placement, totals, catalogue saves, queue consumers — and sheds the ones declared advisory when a path goes over its budget.
+- **[catalog-access](https://github.com/kingletas/magento2-module-catalog-access)** does the catalogue reads every module ends up writing — load a product, turn category ids into names, work in the right store — in batches, with the usual mistakes designed out, like one product loaded per loop.
+- **[promotion-access](https://github.com/kingletas/magento2-module-promotion-access)** answers the cart price rule questions every module ends up asking, like a rule's action or the rule behind a coupon, in batches and without loading a rule for each one.
+- **[foundation](https://github.com/kingletas/magento2-module-foundation)** and **[logger](https://github.com/kingletas/magento2-module-logger)** are the shared pieces the modules above are built on.
+
+## Magento testing and runtime
 
 - **[bluetir](https://github.com/kingletas/bluetir)** drives a real browser through a storefront, adds to cart and places an order. Luma, Hyvä and ScandiPWA are each one YAML profile, so a new store means a new profile rather than new code.
-- **[manipulus](https://github.com/kingletas/manipulus)** works out which RequireJS modules each Magento 2 page type loads, straight from the codebase, and bundles them. No browser, no Node, no running store. Its walkthrough takes a real store from 226 JavaScript requests to 15.
 - **[drexbot](https://github.com/kingletas/drexbot)** runs regression, acceptance, behaviour and performance tests against a Magento storefront.
 - **[harness-kernel](https://github.com/kingletas/harness-kernel)** is the test kernel drexbot is built on. It knows nothing about Magento: it owns the run, the verdicts and the reports, so it can back a harness for anything.
+- **[emporion](https://github.com/kingletas/emporion)** runs a Magento 2 store on your machine as a Docker Compose stack or a kind cluster, from one image. A second store, with its own database, cache, search index and queue, is one command.
 
 ## Platform and DevOps tools
 
 - **[credential-guard](https://github.com/kingletas/credential-guard)** keeps credentials out of git. It scans the working tree and every blob in the history, and installs itself as a pre-commit hook.
+- **[dep-intel](https://github.com/kingletas/dep-intel)** tells you which of your dependencies are vulnerable without telling anyone what you run. It matches OSV and CISA's list of exploited vulnerabilities offline, across nine ecosystems.
+- **[ansible-role-devops](https://github.com/kingletas/ansible-role-devops)** sets up a DevOps workstation, or creates and hardens an automation account on a server, on Ubuntu, Debian, Fedora and RHEL 9.
 - **[dev-snapshot](https://github.com/kingletas/dev-snapshot)** makes one encrypted, verified archive of a source tree, leaving out everything a package manager can rebuild.
 - **[tooling-sync](https://github.com/kingletas/tooling-sync)** tells an installed command apart from the repository it came from, and shows which one changed.
 
@@ -30,6 +42,8 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 
 ## Desktop apps
 
+- **[ordane](https://github.com/kingletas/ordane)** is a desktop console for an Ansible control plane, with or without a Makefile. It shows the exact command before it runs, streams the output and keeps a record of every run, with no server and no database.
+- **[backsight](https://github.com/kingletas/backsight)** is a Terraform workbench that shows what a change will do while you write it. It's early and not released yet.
 - **[solander](https://github.com/kingletas/solander)** opens an Obsidian vault on Ubuntu and never writes into it. Wikilinks, callouts, canvases and Dataview render as themselves, with no plugins, no scripts and no network.
 - **[ariadne](https://github.com/kingletas/ariadne)** builds a book's cast as you read and never shows you anyone past your bookmark. It works offline on epubs you own. It's early, and it needs readers.
 - **[cairn](https://github.com/kingletas/cairn)** keeps every job application you're chasing in one list and screens the job feeds you turn on against what you want. Everything stays in one encrypted file on your machine: no account, no server, no sync.
