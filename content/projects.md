@@ -14,6 +14,21 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 - **[drexbot](https://github.com/kingletas/drexbot)** runs regression, acceptance, behaviour and performance tests against a Magento storefront.
 - **[harness-kernel](https://github.com/kingletas/harness-kernel)** is the test kernel drexbot is built on. It knows nothing about Magento: it owns the run, the verdicts and the reports, so it can back a harness for anything.
 
+## Platform and DevOps tools
+
+- **[backsight](https://github.com/kingletas/backsight)** is a Terraform workbench for Linux that shows what a change will do while you write it, before CI does. It's early and not released yet.
+- **[credential-guard](https://github.com/kingletas/credential-guard)** keeps credentials out of git. It scans the working tree and every blob in the history, and installs itself as a pre-commit hook.
+- **[dev-snapshot](https://github.com/kingletas/dev-snapshot)** makes one encrypted, verified archive of a source tree, leaving out everything a package manager can rebuild.
+- **[tooling-sync](https://github.com/kingletas/tooling-sync)** tells an installed command apart from the repository it came from, and shows which one changed.
+
+## Obsidian plugins
+
+- **[periodic-journal](https://github.com/kingletas/obsidian-periodic-journal)** handles every recurring note from one list of note types, instead of five fixed ones. A second daily note is just another entry.
+- **[stickies](https://github.com/kingletas/obsidian-stickies)** puts movable sticky notes on a passage. They follow the text as it's edited and never touch the Markdown.
+- **[world-engine](https://github.com/kingletas/obsidian-world-engine)** validates a structured vault against YAML schemas and checks it for continuity, with the notes staying the source of truth.
+- **[engineering-toolkit](https://github.com/kingletas/obsidian-engineering-toolkit)** adds light structure to the engineering docs a vault already holds: ADRs, incidents, infrastructure notes and a decision log.
+- **[jira-autolink](https://github.com/kingletas/obsidian-jira-autolink)** turns `PROJ-123` into a link to your Jira, with an optional hover preview of the issue.
+
 ## Reading tools
 
 - **[solander](https://github.com/kingletas/solander)** opens an Obsidian vault on Ubuntu and never writes into it. Wikilinks, callouts, canvases and Dataview render as themselves, with no plugins, no scripts and no network.
