@@ -1,0 +1,35 @@
+This repository holds two kinds of material under two different terms.
+
+1. The writing and images: everything under content/ and assets/images/.
+
+   Copyright (c) 2011-2026 Luis Tineo. All rights reserved.
+
+   You may read it, link to it and quote short passages with credit. You may not
+   republish it, in whole or in part, without permission.
+
+2. Everything else: the configuration, templates, scripts, Makefile and workflows.
+
+   MIT License
+
+   Copyright (c) 2026 Luis Tineo
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+The PaperMod theme in themes/PaperMod is a separate project under its own MIT
+licence, included there.

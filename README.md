@@ -42,3 +42,7 @@ That creates a draft at `content/posts/<year>/varnish-in-2026.md`. It shows up i
 | `layouts/` | The three template overrides described above |
 | `themes/PaperMod` | The theme, a submodule pinned to one commit |
 | `legacy-urls.txt` | Old addresses that must keep working |
+
+## Licence
+
+The posts and images are © Luis Tineo, all rights reserved: read them, link to them, quote a little with credit, but don't republish them. Everything else (config, templates, scripts, workflows) is MIT. [LICENSE](LICENSE) has both.

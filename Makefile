@@ -37,9 +37,11 @@ post: ## Start a draft post: make post name=my-first-post
 check: ## Everything a commit has to pass
 	scripts/check.sh
 
+BASE_URL ?= https://www.kingletas.com/
+
 .PHONY: build
-build: ## Build the site into public/
-	hugo --gc --minify --panicOnWarning
+build: ## Build the site into public/ (BASE_URL=... for another address)
+	hugo --gc --minify --panicOnWarning --baseURL "$(BASE_URL)"
 
 .PHONY: clean
 clean: ## Remove the built site
