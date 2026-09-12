@@ -2,3 +2,17 @@ public/
 resources/_gen/
 .hugo_build.lock
 local.d/
+
+# Obsidian. This is a Hugo site, not a vault, but opening it in Obsidian is
+# the comfortable way to write the posts. Everything below is editor state,
+# and this repository is public, so none of it belongs in a commit.
+.obsidian/
+.obsidian.vimrc
+
+# Plugins that write outside .obsidian/, at the root of whatever folder is
+# open as a vault.
+.trash/
+.stickies/
+.smart-env/
+.claudian/
+/TagsRoutes
