@@ -28,6 +28,7 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 
 ## Platform and DevOps tools
 
+- **[healthbot](https://github.com/kingletas/healthbot)** checks whether customers can actually buy. Every five minutes it drives a real browser through search, cart and checkout, folds in New Relic, Google Analytics and CloudWatch, and decides whether anyone needs waking up. It ships its own Terraform, Packer and Ansible, and a local stack that runs the production code path with no credentials.
 - **[credential-guard](https://github.com/kingletas/credential-guard)** keeps credentials out of git. It scans the working tree and every blob in the history, and installs itself as a pre-commit hook.
 - **[dep-intel](https://github.com/kingletas/dep-intel)** tells you which of your dependencies are vulnerable without telling anyone what you run. It matches OSV and CISA's list of exploited vulnerabilities offline, across nine ecosystems.
 - **[ansible-role-devops](https://github.com/kingletas/ansible-role-devops)** sets up a DevOps workstation, or creates and hardens an automation account on a server, on Ubuntu, Debian, Fedora and RHEL 9.
