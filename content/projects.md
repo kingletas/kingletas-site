@@ -16,6 +16,7 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 - **[catalog-access](https://github.com/kingletas/magento2-module-catalog-access)** does the catalogue reads every module ends up writing — load a product, turn category ids into names, work in the right store — in batches, with the usual mistakes designed out, like one product loaded per loop.
 - **[promotion-access](https://github.com/kingletas/magento2-module-promotion-access)** answers the cart price rule questions every module ends up asking, like a rule's action or the rule behind a coupon, in batches and without loading a rule for each one.
 - **[foundation](https://github.com/kingletas/magento2-module-foundation)** and **[logger](https://github.com/kingletas/magento2-module-logger)** are the shared pieces the modules above are built on.
+- Every module above installs from one Composer repository, **[packages](https://github.com/kingletas/packages)**, and brings the modules it needs along with it.
 
 ## Magento testing and runtime
 
@@ -23,6 +24,7 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 - **[drexbot](https://github.com/kingletas/drexbot)** runs regression, acceptance, behaviour and performance tests against a Magento storefront.
 - **[harness-kernel](https://github.com/kingletas/harness-kernel)** is the test kernel drexbot is built on. It knows nothing about Magento: it owns the run, the verdicts and the reports, so it can back a harness for anything.
 - **[emporion](https://github.com/kingletas/emporion)** runs a Magento 2 store on your machine as a Docker Compose stack or a kind cluster, from one image. A second store, with its own database, cache, search index and queue, is one command.
+- **[kapelos](https://github.com/kingletas/kapelos)** is emporion's smaller sibling: one Magento 2 store on your computer with Docker Compose, started from nothing or from a store you already have. Your code stays where it is, so an edit is live in the store straight away.
 
 ## Platform and DevOps tools
 
@@ -31,6 +33,8 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 - **[ansible-role-devops](https://github.com/kingletas/ansible-role-devops)** sets up a DevOps workstation, or creates and hardens an automation account on a server, on Ubuntu, Debian, Fedora and RHEL 9.
 - **[dev-snapshot](https://github.com/kingletas/dev-snapshot)** makes one encrypted, verified archive of a source tree, leaving out everything a package manager can rebuild.
 - **[tooling-sync](https://github.com/kingletas/tooling-sync)** tells an installed command apart from the repository it came from, and shows which one changed.
+- **[magento-deploy-playbook](https://github.com/kingletas/magento-deploy-playbook)** builds a Magento 2 release on a builder host, pushes it to a fleet, switches over and prunes what it replaced. A build lock stops two people cutting the same environment, and a throwaway Docker fleet lets you watch a whole deploy without owning a server.
+- **[terraform-aws-modules](https://github.com/kingletas/terraform-aws-modules)** is 59 Terraform modules for AWS, from multi-account setup and networking to data, edge and identity, with eleven examples that put them together. Its guide takes you from a clone to a planned stack without an AWS account.
 
 ## Obsidian plugins
 
