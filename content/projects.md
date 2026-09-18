@@ -14,11 +14,11 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 - **[cache-vary](https://github.com/kingletas/magento2-module-cache-vary)** decides what goes into the full-page-cache key, and reports how many copies of each page it allows. It keeps customer segments out of the Varnish hash when nothing cached depends on them, since each active segment can double the copies of every page.
 - **[process-guard](https://github.com/kingletas/magento2-module-process-guard)** times every observer on the hot paths (order placement, totals, catalogue saves, queue consumers) and sheds the ones declared advisory when a path goes over its budget.
 - **[catalog-access](https://github.com/kingletas/magento2-module-catalog-access)** does the catalogue reads every module ends up writing (load a product, turn category ids into names, work in the right store) in batches, with the usual mistakes designed out, like one product loaded per loop.
-- **[catalog-index](https://github.com/kingletas/magento2-module-catalog-index)** serves category, search, product and GraphQL pages from OpenSearch documents that stay current within seconds, while the database still decides checkout. It's not released yet.
-- **[catalog-batch](https://github.com/kingletas/magento2-module-catalog-batch)** asks for configurable product data once per page instead of once per product, with no index and nothing stored. It's not released yet.
+- **[catalog-index](https://github.com/kingletas/magento2-module-catalog-index)** serves category, search, product and GraphQL pages from OpenSearch documents that stay current within seconds, while the database still decides checkout.
+- **[catalog-batch](https://github.com/kingletas/magento2-module-catalog-batch)** asks for configurable product data once per page instead of once per product, with no index and nothing stored.
 - **[promotion-access](https://github.com/kingletas/magento2-module-promotion-access)** answers the cart price rule questions every module ends up asking, like a rule's action or the rule behind a coupon, in batches and without loading a rule for each one.
 - **[foundation](https://github.com/kingletas/magento2-module-foundation)** and **[logger](https://github.com/kingletas/magento2-module-logger)** are the shared pieces the modules above are built on.
-- Every released module above installs from one Composer repository, **[packages](https://github.com/kingletas/packages)**, and brings the modules it needs along with it.
+- Every module above installs from one Composer repository, **[packages](https://github.com/kingletas/packages)**, and brings the modules it needs along with it.
 
 ## Magento testing and runtime
 
