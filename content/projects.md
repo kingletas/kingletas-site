@@ -9,14 +9,16 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 
 ## Magento performance
 
-- **[manipulus](https://github.com/kingletas/manipulus)** works out which RequireJS modules each Magento 2 page type loads, straight from the codebase, and bundles them. No browser, no Node, no running store. Its walkthrough takes a real store from 226 JavaScript requests to 15.
-- **[section-policy](https://github.com/kingletas/magento2-module-section-policy)** decides what a private-content invalidation actually invalidates, and reports what each action costs. On a stock store, logging in refetches every customer section, including a 59 KB country list that's identical for every visitor.
+- **[manipulus](https://github.com/kingletas/manipulus)** works out which RequireJS modules each Magento 2 page type loads, straight from the codebase, and bundles them. No browser, no Node, no running store. Its walkthrough takes a stock 2.4.8 store from 226 JavaScript requests to 15.
+- **[section-policy](https://github.com/kingletas/magento2-module-section-policy)** decides what a private-content invalidation actually invalidates, and reports what each action costs. On a stock store, logging in refetches every customer section, including a country list of around 59 KB that's identical for every visitor.
 - **[cache-vary](https://github.com/kingletas/magento2-module-cache-vary)** decides what goes into the full-page-cache key, and reports how many copies of each page it allows. It keeps customer segments out of the Varnish hash when nothing cached depends on them, since each active segment can double the copies of every page.
-- **[process-guard](https://github.com/kingletas/magento2-module-process-guard)** times every observer on the hot paths — order placement, totals, catalogue saves, queue consumers — and sheds the ones declared advisory when a path goes over its budget.
-- **[catalog-access](https://github.com/kingletas/magento2-module-catalog-access)** does the catalogue reads every module ends up writing — load a product, turn category ids into names, work in the right store — in batches, with the usual mistakes designed out, like one product loaded per loop.
+- **[process-guard](https://github.com/kingletas/magento2-module-process-guard)** times every observer on the hot paths (order placement, totals, catalogue saves, queue consumers) and sheds the ones declared advisory when a path goes over its budget.
+- **[catalog-access](https://github.com/kingletas/magento2-module-catalog-access)** does the catalogue reads every module ends up writing (load a product, turn category ids into names, work in the right store) in batches, with the usual mistakes designed out, like one product loaded per loop.
+- **[catalog-index](https://github.com/kingletas/magento2-module-catalog-index)** serves category, search, product and GraphQL pages from OpenSearch documents that stay current within seconds, while the database still decides checkout. It's not released yet.
+- **[catalog-batch](https://github.com/kingletas/magento2-module-catalog-batch)** asks for configurable product data once per page instead of once per product, with no index and nothing stored. It's not released yet.
 - **[promotion-access](https://github.com/kingletas/magento2-module-promotion-access)** answers the cart price rule questions every module ends up asking, like a rule's action or the rule behind a coupon, in batches and without loading a rule for each one.
 - **[foundation](https://github.com/kingletas/magento2-module-foundation)** and **[logger](https://github.com/kingletas/magento2-module-logger)** are the shared pieces the modules above are built on.
-- Every module above installs from one Composer repository, **[packages](https://github.com/kingletas/packages)**, and brings the modules it needs along with it.
+- Every released module above installs from one Composer repository, **[packages](https://github.com/kingletas/packages)**, and brings the modules it needs along with it.
 
 ## Magento testing and runtime
 
@@ -35,7 +37,7 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 - **[dev-snapshot](https://github.com/kingletas/dev-snapshot)** makes one encrypted, verified archive of a source tree, leaving out everything a package manager can rebuild.
 - **[tooling-sync](https://github.com/kingletas/tooling-sync)** tells an installed command apart from the repository it came from, and shows which one changed.
 - **[magento-deploy-playbook](https://github.com/kingletas/magento-deploy-playbook)** builds a Magento 2 release on a builder host, pushes it to a fleet, switches over and prunes what it replaced. A build lock stops two people cutting the same environment, and a throwaway Docker fleet lets you watch a whole deploy without owning a server.
-- **[terraform-aws-modules](https://github.com/kingletas/terraform-aws-modules)** is 59 Terraform modules for AWS, from multi-account setup and networking to data, edge and identity, with eleven examples that put them together. Its guide takes you from a clone to a planned stack without an AWS account.
+- **[terraform-aws-modules](https://github.com/kingletas/terraform-aws-modules)** is a library of Terraform modules for AWS, from multi-account setup and networking to data, edge and identity, with worked examples that put them together. Its guide takes you from a clone to a planned stack without an AWS account.
 
 ## Obsidian plugins
 

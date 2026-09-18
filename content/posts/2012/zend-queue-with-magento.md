@@ -3,7 +3,7 @@ title: "Zend Queue with Magento"
 date: 2012-08-01T12:53:00.000-04:00
 lastmod: 2012-08-01T12:53:29.947-04:00
 url: /2012/08/zend-queue-with-magento.html
-tags: []
+tags: ["development", "magento", "zend framework"]
 ---
 
 By using Zend Queue with magento we can create an event driven asynchronus integration system.

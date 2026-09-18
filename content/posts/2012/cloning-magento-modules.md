@@ -3,7 +3,7 @@ title: "Cloning magento modules"
 date: 2012-08-01T12:37:00.000-04:00
 lastmod: 2012-08-01T12:37:44.032-04:00
 url: /2012/08/cloning-magento-modules.html
-tags: []
+tags: ["development", "magento"]
 ---
 
 Cloning magento modules will never this easy again.

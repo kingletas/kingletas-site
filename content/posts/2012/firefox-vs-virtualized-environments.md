@@ -3,7 +3,7 @@ title: "FireFox vs Virtualized environments"
 date: 2012-07-23T13:55:00.000-04:00
 lastmod: 2012-07-23T13:55:58.484-04:00
 url: /2012/07/firefox-vs-virtualized-environments.html
-tags: []
+tags: ["linux", "ubuntu"]
 ---
 
 Firefox rocks no doubt about it... but using more memory than virtualbox just to run magento is not cool at all!

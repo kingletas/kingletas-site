@@ -3,7 +3,7 @@ title: "PHP Offloading... Nginx helps so much!"
 date: 2012-07-26T18:06:00.000-04:00
 lastmod: 2012-07-26T18:08:54.643-04:00
 url: /2012/07/php-offloading-nginx-helps-so-much.html
-tags: []
+tags: ["development", "magento", "performance", "system administration"]
 ---
 
 So let's continue our attempt to improve Magento's performance and this time around let's focus on the web server itself.
