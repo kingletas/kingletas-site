@@ -9,7 +9,7 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 
 ## Magento performance
 
-- **[manipulus](https://github.com/kingletas/manipulus)** works out which RequireJS modules each Magento 2 page type loads, straight from the codebase, and bundles them. No browser, no Node, no running store. Its walkthrough takes a stock 2.4.8 store from 226 JavaScript requests to 15.
+- **[manipulus](https://github.com/kingletas/manipulus)** works out which RequireJS modules each Magento 2 page type loads, straight from the codebase, and bundles them. No browser, no Node, no running store. Its walkthrough takes a product page on a stock 2.4.8 store from 226 JavaScript requests to 15.
 - **[section-policy](https://github.com/kingletas/magento2-module-section-policy)** decides what a private-content invalidation actually invalidates, and reports what each action costs. On a stock store, logging in refetches every customer section, including a country list of around 59 KB that's identical for every visitor.
 - **[cache-vary](https://github.com/kingletas/magento2-module-cache-vary)** decides what goes into the full-page-cache key, and reports how many copies of each page it allows. It keeps customer segments out of the Varnish hash when nothing cached depends on them, since each active segment can double the copies of every page.
 - **[process-guard](https://github.com/kingletas/magento2-module-process-guard)** times every observer on the hot paths (order placement, totals, catalogue saves, queue consumers) and sheds the ones declared advisory when a path goes over its budget.
@@ -22,7 +22,7 @@ Everything here is open source and on [GitHub](https://github.com/kingletas).
 
 ## Magento testing and runtime
 
-- **[bluetir](https://github.com/kingletas/bluetir)** drives a real browser through a storefront, adds to cart and places an order. Luma, Hyvä and ScandiPWA are each one YAML profile, so a new store means a new profile rather than new code.
+- **[bluetir](https://github.com/kingletas/bluetir)** drives a real browser through a storefront, from adding to cart to placing an order. Luma, Hyvä and ScandiPWA are each one YAML profile, so a new store means a new profile rather than new code. Only the Luma profile has placed an order so far, on a local store. The Hyvä and ScandiPWA profiles are checked up to the final button and not past it, because their demo stores belong to somebody else and pressing it places a real order there.
 - **[drexbot](https://github.com/kingletas/drexbot)** runs regression, acceptance, behaviour and performance tests against a Magento storefront.
 - **[harness-kernel](https://github.com/kingletas/harness-kernel)** is the test kernel drexbot is built on. It knows nothing about Magento: it owns the run, the verdicts and the reports, so it can back a harness for anything.
 - **[emporion](https://github.com/kingletas/emporion)** runs a Magento 2 store on your machine as a Docker Compose stack or a kind cluster, from one image. A second store, with its own database, cache, search index and queue, is one command.
