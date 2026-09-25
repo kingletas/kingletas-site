@@ -56,7 +56,7 @@ That would have been a tidy little post on its own. It wasn't the end of the day
 
 ## Three more the same day
 
-**The prompt died without saying anything.** The script asks before it changes anything. Run with no terminal attached, `read -p` prints no prompt, hits the end of its input, returns 1, and `set -e` ends the script. No question, no error, just gone. It now checks `[ -t 0 ]` first, and says to pass `-y` if there's nobody to ask.
+**The prompt died without saying anything.** The script asks before it changes anything. Run with no terminal attached, `read -p` prints no prompt, hits the end of its input, returns 1, and `set -e` ends the script. It printed nothing and exited. It now checks `[ -t 0 ]` first, and says to pass `-y` if there's nobody to ask.
 
 **The check timed out part way through, and the repositories it never reached came back clean.** It made eight separate calls per repository to see whether files existed, so a full run ran out of time. Everything after that point was never asked about, and it was reported exactly like everything that passed. It reads each repository's file tree once now.
 
@@ -103,7 +103,7 @@ A name that doesn't exist, several names arriving as one word, and a failed list
 
 Putting that in turned up a few more of the same shape. A file tree that couldn't be read used to report every required file as missing, eleven wrong findings in one go. Now it's one finding that says the tree couldn't be read. And a filter meant to hide the tool's own framing lines was deleting every line containing "repositor", which quietly took out the one telling you a private repository needs a paid plan.
 
-## Test the quiet path too
+## The missing test case
 
 Every one of these bugs had the same outline. The script could tell a good repository from a bad one perfectly well. What it couldn't tell apart was "I checked and found nothing" and "I checked nothing".
 
