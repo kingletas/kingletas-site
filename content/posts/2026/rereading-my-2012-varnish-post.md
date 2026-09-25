@@ -82,6 +82,6 @@ The `X-Varnish-On` header was a hand-built version of something Magento now does
 
 ## What it didn't have
 
-Grace. Nothing in the 2012 setup kept an expired page around. With grace set, Varnish serves the stale copy while it fetches a fresh one, or while the backend is down, so an outage turns into slightly old pages rather than error pages. Magento's generated VCL sets it.
+The 2012 setup had no grace: nothing kept an expired page around. With grace set, Varnish serves the stale copy while it fetches a fresh one, or while the backend is down, so an outage turns into slightly old pages rather than error pages. Magento's generated VCL sets it.
 
 Next in this series is the post I wrote nine days after this one, about nginx and PHP-FPM. It has a `pm.max_children = 50` in it, and the post never says where 50 came from.
