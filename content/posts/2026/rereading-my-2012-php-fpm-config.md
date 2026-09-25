@@ -75,7 +75,7 @@ In every mode `max_children` is the hard ceiling, and the arithmetic sets it.
 
 ## What 2012 got right
 
-Credit where it's due. The same pool had the three settings a production pool still wants:
+The same pool had the three settings a production pool still wants:
 
 ```ini
 pm.max_requests = 500
@@ -146,14 +146,22 @@ fastcgi_param  PHP_VALUE "memory_limit=341M
 max_execution_time=300";
 ```
 
-Or better, put them in the pool config with `php_admin_value[memory_limit] = 341M`, where you can see them next to the pool they belong to. The 2012 pool already does this for `error_log`.
+Or better, put them in the pool config with `php_value[memory_limit] = 341M`, where you can see them next to the pool they belong to. The 2012 pool already does this for `error_log`.
 
 The post doesn't say where 341 came from either.
 
 ## The pool, fourteen years later
 
+Fourteen years later, the same pool looks like this. It's a whole pool file, with Debian's package names and paths:
+
 ```ini
 [www]
+user         = www-data
+group        = www-data
+listen       = /run/php/php8.4-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+
 pm = dynamic
 pm.max_children      = 80          ; from the arithmetic, re-measured per release
 pm.start_servers     = 16
@@ -161,7 +169,7 @@ pm.min_spare_servers = 8
 pm.max_spare_servers = 24
 pm.max_requests      = 500         ; recycle to bound leaks
 pm.status_path       = /fpm-status
-slowlog                   = /var/log/php8.4-fpm/slow.log
+slowlog                   = /var/log/php8.4-fpm.slow.log
 request_slowlog_timeout   = 5s
 request_terminate_timeout = 600s   ; above max_execution_time, so PHP's error fires first
 ```
