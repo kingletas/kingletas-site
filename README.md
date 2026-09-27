@@ -18,11 +18,14 @@ If you cloned without `--recurse-submodules`, the theme folder is empty and the 
 
 ## Writing a post
 
+Drafts live outside this repository until they're ready to publish. A draft committed here would be public in the repository even though the site never builds it.
+
 ```bash
-make post name=varnish-in-2026
+make post name=varnish-in-2026 DRAFTS=~/drafts
+make preview DRAFT=~/drafts/varnish-in-2026.md
 ```
 
-That creates a draft at `content/posts/<year>/varnish-in-2026.md`. It shows up in `make serve` but not on the live site. Remove `draft: true` from its front matter when it's ready, then commit and push.
+The first starts a draft in the folder you name, from the site's archetype. The second shows it on the local site at http://localhost:1313, with any images from an `images/` folder beside it, and removes everything it copied when you stop it. When the post is ready, set `draft: false`, move it into `content/posts/<year>/`, then commit and push.
 
 ## Checks
 
@@ -30,6 +33,7 @@ That creates a draft at `content/posts/<year>/varnish-in-2026.md`. It shows up i
 
 - Hugo prints any warning, deprecations included.
 - An address the old Blogger site served stops resolving. The list is in `legacy-urls.txt`.
+- A post under `content/` says `draft: true`. It names the file.
 - One of the three templates in `layouts/` no longer matches the theme. Those files are PaperMod's own, with only two renamed Hugo calls that PaperMod hasn't caught up with yet ([PaperMod #1856](https://github.com/adityatelange/hugo-PaperMod/issues/1856)). When the theme changes one of them, the check tells you whether to regenerate the override or delete it.
 
 ## Layout

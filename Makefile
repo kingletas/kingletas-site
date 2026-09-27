@@ -23,13 +23,12 @@ serve: ## Preview at http://localhost:1313, rebuilding on every save
 	hugo server --buildDrafts
 
 .PHONY: post
-post: ## Start a draft post: make post name=my-first-post
-	@if [[ -z "$(name)" ]]; then \
-		echo "usage: make post name=<slug>"; \
-		echo "  make post name=varnish-in-2026"; \
-		exit 2; \
-	fi
-	hugo new content "posts/$$(date +%Y)/$(name).md"
+post: ## Start a draft outside this repository: make post name=my-post DRAFTS=<folder>
+	@scripts/new-draft.sh "$(name)" "$(DRAFTS)"
+
+.PHONY: preview
+preview: ## Preview a draft kept outside this repository: make preview DRAFT=<path>
+	@scripts/preview.sh "$(DRAFT)"
 
 # --- checks and output ---
 
