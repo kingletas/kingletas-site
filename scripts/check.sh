@@ -36,4 +36,14 @@ for file in "${OVERRIDES[@]}"; do
     fi
 done
 
+# A draft never enters this repository. Drafts live outside it until they are
+# cleared to publish: a draft committed here is public in the repository even
+# though the site never builds it.
+while IFS= read -r post; do
+    echo "a draft is in the repository: ${post#"$ROOT"/}. Publish it with draft: false, or keep it outside this repository and use make preview"
+    fail=1
+done < <("$ROOT/scripts/find-drafts.sh" "$ROOT/content")
+
+"$ROOT/scripts/test.sh" || fail=1
+
 exit "$fail"
