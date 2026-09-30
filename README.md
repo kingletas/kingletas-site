@@ -44,6 +44,7 @@ The first starts a draft in the folder you name, from the site's archetype. The 
 | `content/projects.md` | The projects page |
 | `hugo.toml` | Site settings, the home page intro and the menu |
 | `layouts/` | The three template overrides described above |
+| `static/files/` | Downloads a post links to, served unchanged at `/files/`; the post gives each file's SHA-256 |
 | `themes/PaperMod` | The theme, a submodule pinned to one commit |
 | `legacy-urls.txt` | Old addresses that must keep working |
 
