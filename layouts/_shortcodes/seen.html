@@ -1,0 +1,13 @@
+{{- /* A "What you'd see" panel: closed on screen so the steps stay short, and
+  opened for printing by open-for-print.js, loaded once per page. */ -}}
+<details class="dr-seen">
+<summary>{{ with .Get "title" }}{{ . }}{{ else }}What you'd see{{ end }}</summary>
+<div class="dr-seen-body">
+{{ .Inner | .Page.RenderString (dict "display" "block") }}
+</div>
+</details>
+{{- if not (.Page.Store.Get "open-for-print") }}
+{{- .Page.Store.Set "open-for-print" true }}
+{{- $js := resources.Get "js/open-for-print.js" | resources.Minify | resources.Fingerprint "sha384" }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{- end }}

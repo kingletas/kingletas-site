@@ -14,5 +14,6 @@ This section puts those to work. Start with the calculator: pick a target, type 
 
 - **[Reliability calculator](reliability-calculator/)**: downtime per availability target, work in flight from Little's law, and how fast an error rate burns a month's budget, with the alerts that would fire.
 - **[The first fifteen minutes of an incident](first-fifteen-minutes/)**: a checklist to work through while it's happening, with a running clock and a summary to paste into your team's chat.
+- **[Rehearsing recovery on a laptop](rehearsing-recovery/)**: five disaster-recovery rehearsals on invented data, from a bad update to a break-in, each built to fail loudly when the recovery is wrong.
 
-More is on its way: a walk through a disaster-recovery rehearsal, and a gallery of dashboards that watch what customers feel. Each will appear here as it's published.
+More is on its way: a gallery of dashboards that watch what customers feel. It will appear here when it's published.
