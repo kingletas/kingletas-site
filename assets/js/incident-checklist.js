@@ -122,6 +122,7 @@
     const page = readPage(root);
     const clock = root.querySelector("[data-clock]");
     const startedAt = root.querySelector("[data-started]");
+    const start = root.querySelector("[data-start]");
 
     function startClock() {
       if (!state.start) { state.start = Date.now(); save(state); }
@@ -145,6 +146,10 @@
     function tick() {
       if (clock) clock.textContent = state.start ? elapsed(Date.now() - state.start) : "00:00";
       if (startedAt) startedAt.textContent = state.start ? "Started " + utc(state.start) : "Not started";
+      if (start) {
+        start.textContent = state.start ? "Clock running" : "Start the clock";
+        start.setAttribute("aria-disabled", state.start ? "true" : "false");
+      }
     }
 
     root.addEventListener("change", function (e) {
@@ -168,7 +173,6 @@
       save(state);
     });
 
-    const start = root.querySelector("[data-start]");
     if (start) {
       start.hidden = false;
       start.addEventListener("click", function () { startClock(); render(); });

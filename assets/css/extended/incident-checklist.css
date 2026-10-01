@@ -1,5 +1,8 @@
 /* The first-fifteen-minutes checklist. Shares the calculator's field and button
    styles; colours come from the theme, so light and dark follow the site. */
+/* Only the clock line stays pinned, so it takes one line even on a phone, and the
+   scroll padding keeps a focused field from sitting underneath it. */
+html:has(.ic-bar:not([hidden])) { scroll-padding-top: 4rem; }
 .ic-bar {
   position: sticky;
   top: 0;
@@ -7,8 +10,8 @@
   background: var(--theme);
   border-bottom: 1px solid var(--border);
   padding: 0.5rem 0;
-  margin-bottom: 1rem;
 }
+.ic-tools { margin-bottom: 1rem; }
 .ic-clock { margin: 0; font-size: 1.1rem; }
 .ic-clock [data-clock] { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 1.4rem; }
 .ic-started { color: var(--secondary); font-size: 0.9em; margin-left: 0.5em; }
@@ -35,6 +38,8 @@
   width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; flex: none; accent-color: var(--primary);
 }
 .ic-stamp { font-variant-numeric: tabular-nums; color: var(--secondary); font-size: 0.9em; margin-left: 1.85rem; }
+.ic-stamp:empty { display: none; }
+.ic-actions [aria-disabled="true"] { opacity: 0.6; cursor: default; }
 .ic-why { color: var(--secondary); font-size: 0.92em; margin: 0.2rem 0 0 1.85rem; }
 .ic-sevs { display: grid; gap: 0.75rem; }
 .ic-sev { padding: 0.5rem; border-radius: 6px; }
