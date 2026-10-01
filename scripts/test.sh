@@ -52,8 +52,9 @@ ok_if "make post starts a draft outside, from the archetype" new_draft_ok
 # --- the reliability calculator's math ----------------------------------------
 if command -v node >/dev/null 2>&1; then
     ok_if "the reliability calculator matches its worked cases" quiet node "$ROOT/scripts/test-calculator.js"
+    ok_if "the incident checklist's clock and summary read right" quiet node "$ROOT/scripts/test-checklist.js"
 else
-    echo "FAIL  the reliability calculator's test needs node, and there is none on PATH"
+    echo "FAIL  the calculator and checklist tests need node, and there is none on PATH"
     fail=1
 fi
 
