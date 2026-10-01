@@ -22,6 +22,8 @@
   const MINUTE = 60;
   const HOUR = 60 * MINUTE;
   const DAY = 24 * HOUR;
+  // The highest target the inputs accept, matching their max attribute.
+  const MAX_TARGET = 99.99999;
 
   // A 365-day year and a 30-day month, the periods error budgets are usually set over.
   const PERIODS = [
@@ -115,6 +117,11 @@
     return value.toLocaleString("en-US", { maximumFractionDigits: 1 });
   }
 
+  /** A burn rate as "14.4×" or "1,000×", the same in the output and the summary. */
+  function burn(rate) {
+    return count(Math.round(rate * 10) / 10) + "×";
+  }
+
   // --- the page --------------------------------------------------------------
 
   function number(input) {
@@ -149,10 +156,10 @@
   function nines(root) {
     const field = root.querySelector('[name="availability"]');
     const a = number(field);
-    flag(field, !(a >= 0 && a < 100));
-    if (!(a >= 0 && a < 100)) {
+    flag(field, !(a >= 0 && a <= MAX_TARGET));
+    if (!(a >= 0 && a <= MAX_TARGET)) {
       PERIODS.forEach(function (p) { setText(root, p.name, ""); });
-      setSummary(root, "Enter a target below 100, such as 99.9.");
+      setSummary(root, "Enter a target from 0 to 99.99999, such as 99.9.");
       return;
     }
     PERIODS.forEach(function (p) { setText(root, p.name, duration(downtime(a, p.seconds))); });
@@ -185,18 +192,18 @@
     const errorsField = root.querySelector('[name="errors"]');
     const slo = number(sloField);
     const errors = number(errorsField);
-    flag(sloField, !(slo > 0 && slo < 100));
+    flag(sloField, !(slo > 0 && slo <= MAX_TARGET));
     flag(errorsField, !(errors >= 0 && errors <= 100));
     const body = root.querySelector("[data-alerts]");
-    if (!(slo > 0 && slo < 100) || !(errors >= 0 && errors <= 100)) {
+    if (!(slo > 0 && slo <= MAX_TARGET) || !(errors >= 0 && errors <= 100)) {
       setText(root, "burn", "");
       setText(root, "lasts", "");
       if (body) body.textContent = "";
-      setSummary(root, "Enter an objective below 100% and an error rate from 0 to 100%.");
+      setSummary(root, "Enter an objective above 0 and up to 99.99999%, and an error rate from 0 to 100%.");
       return;
     }
     const rate = burnRate(slo, errors);
-    setText(root, "burn", count(Math.round(rate * 10) / 10) + "×");
+    setText(root, "burn", burn(rate));
     setText(root, "lasts", rate > 0 ? duration(budgetLastsDays(rate) * DAY) : "for ever");
     const rows = alerts(rate);
     if (body) {
@@ -223,7 +230,7 @@
     }
     const loudest = rows.find(function (r) { return r.fires; });
     setSummary(root, "Failing " + errors + "% against " + slo + "% burns the budget at "
-      + oneDecimal(rate) + "×" + (rate > 0 ? ", so a month's budget lasts " + duration(budgetLastsDays(rate) * DAY) : "")
+      + burn(rate) + (rate > 0 ? ", so a month's budget lasts " + duration(budgetLastsDays(rate) * DAY) : "")
       + ". " + (loudest ? loudest.severity + " after about " + duration(loudest.afterSeconds) + "." : "No alert fires."));
   }
 
