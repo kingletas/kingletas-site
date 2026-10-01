@@ -36,6 +36,7 @@
 .rc-table caption { text-align: left; font-weight: 600; padding-bottom: 0.25rem; }
 .rc-scroll { overflow-x: auto; }
 .rc-summary { margin: 0.75rem 0; }
+.rc-result, .rc-summary { overflow-wrap: anywhere; }
 .rc-why { color: var(--secondary); font-size: 0.95em; margin-top: 1rem; }
 .rc-button {
   font-size: 0.95rem;

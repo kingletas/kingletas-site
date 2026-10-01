@@ -127,13 +127,29 @@
     if (el) el.textContent = text;
   }
 
+  // The summary is a live region, so it waits until typing pauses: one sentence
+  // per change, not one per keystroke.
   function setSummary(root, text) {
     const el = root.querySelector("[data-summary]");
-    if (el) el.textContent = text;
+    if (!el) return;
+    clearTimeout(root._rcTimer);
+    if (root._rcQuiet) {
+      el.textContent = text;
+    } else {
+      root._rcTimer = setTimeout(function () { el.textContent = text; }, 600);
+    }
+  }
+
+  // Marks a field invalid on the field itself, so it still says so when reached later.
+  function flag(input, bad) {
+    if (bad) input.setAttribute("aria-invalid", "true");
+    else input.removeAttribute("aria-invalid");
   }
 
   function nines(root) {
-    const a = number(root.querySelector('[name="availability"]'));
+    const field = root.querySelector('[name="availability"]');
+    const a = number(field);
+    flag(field, !(a >= 0 && a < 100));
     if (!(a >= 0 && a < 100)) {
       PERIODS.forEach(function (p) { setText(root, p.name, ""); });
       setSummary(root, "Enter a target below 100, such as 99.9.");
@@ -145,8 +161,12 @@
   }
 
   function little(root) {
-    const rate = number(root.querySelector('[name="rate"]'));
-    const ms = number(root.querySelector('[name="latency"]'));
+    const rateField = root.querySelector('[name="rate"]');
+    const msField = root.querySelector('[name="latency"]');
+    const rate = number(rateField);
+    const ms = number(msField);
+    flag(rateField, !(rate >= 0));
+    flag(msField, !(ms >= 0));
     if (!(rate >= 0) || !(ms >= 0)) {
       setText(root, "inflight", "");
       setSummary(root, "Enter a request rate and a time per request, both zero or more.");
@@ -161,8 +181,12 @@
   const HEADINGS = ["Alert", "Windows", "Fires at", "Fires", "Budget gone when it fires"];
 
   function burn(root) {
-    const slo = number(root.querySelector('[name="slo"]'));
-    const errors = number(root.querySelector('[name="errors"]'));
+    const sloField = root.querySelector('[name="slo"]');
+    const errorsField = root.querySelector('[name="errors"]');
+    const slo = number(sloField);
+    const errors = number(errorsField);
+    flag(sloField, !(slo > 0 && slo < 100));
+    flag(errorsField, !(errors >= 0 && errors <= 100));
     const body = root.querySelector("[data-alerts]");
     if (!(slo > 0 && slo < 100) || !(errors >= 0 && errors <= 100)) {
       setText(root, "burn", "");
@@ -179,16 +203,18 @@
       body.textContent = "";
       rows.forEach(function (r) {
         const tr = document.createElement("tr");
+        tr.setAttribute("role", "row");
         [
           r.severity,
           windowLength(r.longSeconds) + ", checked against " + windowLength(r.shortSeconds),
           r.threshold + "×",
           r.fires ? "Yes, after about " + duration(r.afterSeconds) : "No",
-          oneDecimal(r.budgetSpentPercent) + "%",
+          r.fires ? oneDecimal(r.budgetSpentPercent) + "%" : "Not reached",
         ].forEach(function (text, i) {
           const td = document.createElement("td");
           // The column's name, shown beside the value when a narrow screen stacks the rows.
           td.setAttribute("data-label", HEADINGS[i]);
+          td.setAttribute("role", "cell");
           td.textContent = text;
           tr.appendChild(td);
         });
@@ -228,11 +254,23 @@
       if (copy) {
         copy.hidden = !(navigator.clipboard && window.isSecureContext);
         copy.addEventListener("click", function () {
+          clearTimeout(panel._rcTimer);
+          panel._rcQuiet = true;
+          update(panel);
+          panel._rcQuiet = false;
           const summary = panel.querySelector("[data-summary]");
-          copyText(summary ? summary.textContent : "", copy);
+          const lines = [summary ? summary.textContent : ""];
+          panel.querySelectorAll("[data-alerts] tr").forEach(function (tr) {
+            const cells = Array.prototype.map.call(tr.children, function (td) { return td.textContent; });
+            lines.push("- " + cells[0] + ", " + cells[1] + ", at " + cells[2] + ": " + cells[3]
+              + (cells[4] === "Not reached" ? "" : " (" + cells[4] + " of the budget gone)"));
+          });
+          copyText(lines.join("\n"), copy);
         });
       }
+      panel._rcQuiet = true;
       update(panel);
+      panel._rcQuiet = false;
     });
     doc.querySelectorAll("[data-print]").forEach(function (button) {
       button.hidden = false;

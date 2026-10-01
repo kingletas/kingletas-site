@@ -66,10 +66,12 @@
     </div>
     <p class="rc-result">Burn rate: <output data-out="burn" for="rc-slo rc-errors"></output>. A month's budget lasts: <output data-out="lasts" for="rc-slo rc-errors"></output>.</p>
     <div class="rc-scroll">
-      <table class="rc-table rc-stack">
+      {{- /* Explicit roles keep the table a table for screen readers when a narrow
+        screen restyles its rows as blocks. */}}
+      <table class="rc-table rc-stack" role="table">
         <caption id="rc-alerts-caption">Which alerts fire, if this rate holds</caption>
-        <thead><tr><th scope="col">Alert</th><th scope="col">Windows</th><th scope="col">Fires at</th><th scope="col">Fires</th><th scope="col">Budget gone when it fires</th></tr></thead>
-        <tbody data-alerts></tbody>
+        <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Alert</th><th scope="col" role="columnheader">Windows</th><th scope="col" role="columnheader">Fires at</th><th scope="col" role="columnheader">Fires</th><th scope="col" role="columnheader">Budget gone when it fires</th></tr></thead>
+        <tbody data-alerts role="rowgroup"></tbody>
       </table>
     </div>
     <p class="rc-summary" data-summary aria-live="polite"></p>
