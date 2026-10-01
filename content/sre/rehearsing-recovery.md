@@ -96,7 +96,7 @@ These are examples, described rather than copied from a terminal.
 **What it caught:**
 
 - **The emulator's API reported the stopped database and the stopped cache as "available".** A stop condition has to watch what the application sees, never the control plane. That's why the alarm is fed by the probe.
-- **A real writer failover means errors for a while.** Here both database instances share one container, so the failover is quiet. On AWS, reads and writes fail during a failover, and [AWS's documentation on Aurora high availability](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html) says service is "typically restored in less than 60 seconds, and often less than 30 seconds". The alarm's threshold has to allow for up to about a minute of errors.
+- **A real writer failover means errors for a while.** Here both database instances share one container, so the failover is quiet. On AWS, reads and writes to the instance being failed over fail until it's done (other readers keep serving), and [AWS's documentation on Aurora high availability](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html) says service is "typically restored in less than 60 seconds, and often less than 30 seconds". The alarm's threshold has to allow for up to about a minute of errors.
 
 {{< seen >}}
 These are examples, described rather than copied from a terminal.
