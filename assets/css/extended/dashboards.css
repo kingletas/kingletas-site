@@ -1,0 +1,3 @@
+/* Dashboard screenshots are light-themed, so a thin frame keeps them from
+   sitting as a bare white block on the dark theme. */
+.dashboard-shot img { border: 1px solid var(--border); border-radius: 6px; }
