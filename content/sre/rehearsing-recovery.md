@@ -8,7 +8,7 @@ ShowToc: true
 TocOpen: false
 ---
 
-These five rehearsals recover an online store's database from five kinds of trouble: bad data, a lost region, a failing database or cache, a break-in, and a team under pressure. Each one runs on a laptop, against a local emulator of AWS, with invented orders and customers.
+These five rehearsals recover an online store's database from five kinds of trouble: bad data, a lost region, a failing database or cache, a break-in, and a team under pressure. Each one runs on a laptop, against a local emulator of AWS, and every one that needs a store gives it invented orders and customers.
 
 A recovery procedure nobody has run is a guess, and the outage is the worst time to find out. So each rehearsal breaks something on purpose, follows the recovery steps, and then checks the data itself. **If the recovery went wrong, the rehearsal fails and says why.**
 
@@ -16,7 +16,7 @@ You don't need to know any SRE to follow along. Each section says what breaks, t
 
 ## Four rules every rehearsal follows
 
-1. **Check the data, not the status.** The emulator reported a stopped database as "available", and its API changed in moments when the databases underneath hadn't. Every check asks the database, or the program using it, what it actually sees.
+1. **Check the data, not the status.** The emulator reported a stopped database as "available", and after an unplanned failover its API changed while the databases underneath didn't. Every check asks the database, or the program using it, what it actually sees.
 2. **Run it both ways.** Each rehearsal is run once done right, where every check must pass, and once with a deliberate mistake, where the checks must fail. A check that can't fail proves nothing.
 3. **Say what it can't prove.** The emulator runs real database software, so every SQL step is real, but it doesn't run all of the cloud's managed features, and its timings say nothing about a real system. Each section lists what only a real account can show.
 4. **Leave nothing behind.** Each rehearsal deletes what it built, including when it's stopped halfway.
@@ -28,7 +28,7 @@ You don't need to know any SRE to follow along. Each section says what breaks, t
 **The steps:**
 
 1. Create a set of invented orders.
-2. Take a logical backup, the kind a nightly job takes.
+2. Take a logical backup.
 3. Run the damaging update.
 4. Restore the backup into a **second** database, never over the live one.
 5. Replay the database's change log from the backup up to the moment before the damage.
