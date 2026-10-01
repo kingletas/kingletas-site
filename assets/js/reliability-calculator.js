@@ -118,7 +118,7 @@
   }
 
   /** A burn rate as "14.4×" or "1,000×", the same in the output and the summary. */
-  function burn(rate) {
+  function burnLabel(rate) {
     return count(Math.round(rate * 10) / 10) + "×";
   }
 
@@ -203,7 +203,7 @@
       return;
     }
     const rate = burnRate(slo, errors);
-    setText(root, "burn", burn(rate));
+    setText(root, "burn", burnLabel(rate));
     setText(root, "lasts", rate > 0 ? duration(budgetLastsDays(rate) * DAY) : "for ever");
     const rows = alerts(rate);
     if (body) {
@@ -230,7 +230,7 @@
     }
     const loudest = rows.find(function (r) { return r.fires; });
     setSummary(root, "Failing " + errors + "% against " + slo + "% burns the budget at "
-      + burn(rate) + (rate > 0 ? ", so a month's budget lasts " + duration(budgetLastsDays(rate) * DAY) : "")
+      + burnLabel(rate) + (rate > 0 ? ", so a month's budget lasts " + duration(budgetLastsDays(rate) * DAY) : "")
       + ". " + (loudest ? loudest.severity + " after about " + duration(loudest.afterSeconds) + "." : "No alert fires."));
   }
 

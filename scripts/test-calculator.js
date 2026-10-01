@@ -57,5 +57,13 @@ ok("below 1x nothing fires", () =>
 ok("the alert windows read as people write them", () =>
   assert.deepEqual(m.ALERTS.map((a) => m.windowLength(a.longSeconds) + "/" + m.windowLength(a.shortSeconds)),
     ["1 hour/5 minutes", "6 hours/30 minutes", "3 days/6 hours"]));
+// A second function with a panel's name replaces the panel silently, and the
+// math above still passes; a formatter named "burn" once emptied the burn panel.
+ok("no two functions in the script share a name", () => {
+  const source = require("node:fs").readFileSync(
+    path.join(__dirname, "..", "assets", "js", "reliability-calculator.js"), "utf8");
+  const names = [...source.matchAll(/function (\w+)\s*\(/g)].map((x) => x[1]);
+  assert.deepEqual(names.filter((n, i) => names.indexOf(n) !== i), []);
+});
 
 process.exit(failed);
