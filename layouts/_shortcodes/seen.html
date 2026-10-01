@@ -1,0 +1,15 @@
+{{- /* A "What you'd see" panel. It starts open, so without JavaScript it shows
+  and prints; open-for-print.js, loaded with the first panel, closes it on screen and
+  opens it again for printing. */ -}}
+<details class="dr-seen" open>
+<summary>{{ with .Get "title" }}{{ . }}{{ else }}What you'd see{{ end }}</summary>
+<div class="dr-seen-body">
+{{ .Inner | .Page.RenderString (dict "display" "block") }}
+</div>
+</details>
+{{- /* The script goes in once, with the page's first shortcode. If another shortcode
+  ever comes first, the script is left out and the panels simply stay open. */ -}}
+{{- if eq .Ordinal 0 }}
+{{- $js := resources.Get "js/open-for-print.js" | resources.Minify | resources.Fingerprint "sha384" }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{- end }}
