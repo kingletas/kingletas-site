@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The draft gate and the preview, on invented posts. Run by check.sh.
+# The draft gate and the preview, on invented posts, and the calculator's math. Run by check.sh.
 # shellcheck disable=SC2329  # the helpers below are run through ok_if, which shellcheck cannot follow
 set -uo pipefail
 
@@ -48,5 +48,13 @@ new_draft_ok() {
         && grep -q '^title: "An Invented Post"$' "$n/an-invented-post.md"
 }
 ok_if "make post starts a draft outside, from the archetype" new_draft_ok
+
+# --- the reliability calculator's math ----------------------------------------
+if command -v node >/dev/null 2>&1; then
+    ok_if "the reliability calculator matches its worked cases" quiet node "$ROOT/scripts/test-calculator.js"
+else
+    echo "FAIL  the reliability calculator's test needs node, and there is none on PATH"
+    fail=1
+fi
 
 exit "$fail"

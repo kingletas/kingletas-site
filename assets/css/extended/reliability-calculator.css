@@ -1,0 +1,69 @@
+/* The reliability calculator. Colours come from the theme's own variables, so
+   light and dark follow the site's toggle. */
+.rc-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+  background: var(--entry);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+.rc-panel h2 { margin-top: 0; }
+.rc-label {
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--secondary);
+  margin-right: 0.5em;
+}
+.rc-formula { font-family: var(--font-mono, ui-monospace, monospace); }
+.rc-field { margin: 1rem 0 0.5rem; }
+.rc-field label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+.rc-field input {
+  width: 100%;
+  max-width: 16rem;
+  font-size: 1rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--tertiary);
+  border-radius: 6px;
+  background: var(--theme);
+  color: var(--primary);
+}
+.rc-hint { font-size: 0.9em; color: var(--secondary); margin: 0.25rem 0 0; }
+.rc-result output, .rc-table td { font-variant-numeric: tabular-nums; font-weight: 600; }
+.rc-table { margin: 1rem 0 0.5rem; }
+.rc-table caption { text-align: left; font-weight: 600; padding-bottom: 0.25rem; }
+.rc-scroll { overflow-x: auto; }
+.rc-summary { margin: 0.75rem 0; }
+.rc-why { color: var(--secondary); font-size: 0.95em; margin-top: 1rem; }
+.rc-button {
+  font-size: 0.95rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--tertiary);
+  border-radius: 6px;
+  background: var(--theme);
+  color: var(--primary);
+  cursor: pointer;
+}
+.rc-button:hover { background: var(--code-bg); }
+.rc-field input:focus-visible,
+.rc-button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+/* On a narrow screen the alert table stacks: one block per alert, each value
+   with its column's name beside it. */
+@media (max-width: 40rem) {
+  .rc-stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .rc-stack, .rc-stack tbody, .rc-stack tr, .rc-stack td { display: block; width: 100%; }
+  .rc-stack tr { border-top: 1px solid var(--border); padding: 0.5rem 0; }
+  .rc-stack td { border: none; padding: 0.15rem 0; }
+  .rc-stack caption { display: block; width: 100%; }
+  .rc-stack td::before { content: attr(data-label) ": "; font-weight: 400; color: var(--secondary); }
+}
+@media print {
+  .rc-button, .rc-hint, .rc-actions, .header, .footer, .post-footer, .paginav { display: none !important; }
+  .rc-panel { break-inside: avoid; border-color: #999; background: none; }
+  .rc-field input { border: none; padding: 0; font-weight: 600; }
+}

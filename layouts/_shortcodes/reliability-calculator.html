@@ -1,0 +1,85 @@
+{{- /* The reliability calculator. Each panel's formula and worked example are plain
+  HTML, so the page teaches without JavaScript; the form is hidden until the script
+  runs and shows it. The script is this site's own file, served from this site. */ -}}
+<div class="rc">
+
+<section class="rc-panel" data-calc="nines" aria-labelledby="rc-nines-title">
+  <h2 id="rc-nines-title">What an availability target allows</h2>
+  <p class="rc-formula"><span class="rc-label">Formula</span> downtime = (1 &minus; availability) &times; period</p>
+  <p class="rc-example"><span class="rc-label">Example</span> 99.9% over 30 days allows 0.1% of 43,200 minutes: <strong>43.2 minutes</strong>. Each extra nine allows ten times less.</p>
+  <form hidden>
+    <div class="rc-field">
+      <label for="rc-availability">Availability target, in percent</label>
+      <input id="rc-availability" name="availability" type="number" inputmode="decimal" min="0" max="99.99999" step="any" value="99.9" list="rc-targets" aria-describedby="rc-availability-hint">
+      <datalist id="rc-targets"><option value="99"><option value="99.5"><option value="99.9"><option value="99.95"><option value="99.99"><option value="99.999"></datalist>
+      <p class="rc-hint" id="rc-availability-hint">For example 99.9, the common "three nines".</p>
+    </div>
+    <table class="rc-table">
+      <caption>Downtime allowed</caption>
+      <thead><tr><th scope="col">Per</th><th scope="col">Downtime</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Year</th><td data-out="year"></td></tr>
+        <tr><th scope="row">30 days</th><td data-out="30 days"></td></tr>
+        <tr><th scope="row">Week</th><td data-out="week"></td></tr>
+        <tr><th scope="row">Day</th><td data-out="day"></td></tr>
+      </tbody>
+    </table>
+    <p class="rc-summary" data-summary aria-live="polite"></p>
+    <button type="button" class="rc-button" data-copy hidden>Copy the answer</button>
+  </form>
+  <p class="rc-why">Why it matters: a target stricter than the time it takes a person to notice and act is a wish, not a target. At 99.99% there are about 4 minutes a month.</p>
+</section>
+
+<section class="rc-panel" data-calc="little" aria-labelledby="rc-little-title">
+  <h2 id="rc-little-title">How much work is in flight</h2>
+  <p class="rc-formula"><span class="rc-label">Formula</span> in flight = requests per second &times; seconds each takes (Little's law)</p>
+  <p class="rc-example"><span class="rc-label">Example</span> 200 requests a second at half a second each means about <strong>100 in progress at once</strong>. If each slows to 2 seconds, the same traffic needs 400.</p>
+  <form hidden>
+    <div class="rc-field">
+      <label for="rc-rate">Requests per second</label>
+      <input id="rc-rate" name="rate" type="number" inputmode="decimal" min="0" step="any" value="200">
+    </div>
+    <div class="rc-field">
+      <label for="rc-latency">Time each request takes, in milliseconds</label>
+      <input id="rc-latency" name="latency" type="number" inputmode="decimal" min="0" step="any" value="500" aria-describedby="rc-latency-hint">
+      <p class="rc-hint" id="rc-latency-hint">Try your slow day, not your average one.</p>
+    </div>
+    <p class="rc-result">In progress at once: <output data-out="inflight" for="rc-rate rc-latency"></output></p>
+    <p class="rc-summary" data-summary aria-live="polite"></p>
+    <button type="button" class="rc-button" data-copy hidden>Copy the answer</button>
+  </form>
+  <p class="rc-why">Why it matters: worker and connection pools sized for average latency run out exactly when latency rises, which is during an incident.</p>
+</section>
+
+<section class="rc-panel" data-calc="burn" aria-labelledby="rc-burn-title">
+  <h2 id="rc-burn-title">How fast failures spend the error budget</h2>
+  <p class="rc-formula"><span class="rc-label">Formula</span> burn rate = share of requests failing &divide; share allowed to fail; a 30-day budget lasts 30 &divide; burn rate days</p>
+  <p class="rc-example"><span class="rc-label">Example</span> a 99.9% objective allows 0.1% of requests to fail. If 1.44% are failing, that is a <strong>14.4&times; burn</strong>: the month's budget is gone in about 2 days, so someone should be paged.</p>
+  <form hidden>
+    <div class="rc-field">
+      <label for="rc-slo">Objective, in percent of requests that succeed</label>
+      <input id="rc-slo" name="slo" type="number" inputmode="decimal" min="0" max="99.99999" step="any" value="99.9">
+    </div>
+    <div class="rc-field">
+      <label for="rc-errors">Requests failing right now, in percent</label>
+      <input id="rc-errors" name="errors" type="number" inputmode="decimal" min="0" max="100" step="any" value="1.44">
+    </div>
+    <p class="rc-result">Burn rate: <output data-out="burn" for="rc-slo rc-errors"></output>. A month's budget lasts: <output data-out="lasts" for="rc-slo rc-errors"></output>.</p>
+    <div class="rc-scroll">
+      <table class="rc-table rc-stack">
+        <caption id="rc-alerts-caption">Which alerts fire, if this rate holds</caption>
+        <thead><tr><th scope="col">Alert</th><th scope="col">Windows</th><th scope="col">Fires at</th><th scope="col">Fires</th><th scope="col">Budget gone when it fires</th></tr></thead>
+        <tbody data-alerts></tbody>
+      </table>
+    </div>
+    <p class="rc-summary" data-summary aria-live="polite"></p>
+    <button type="button" class="rc-button" data-copy hidden>Copy the answer</button>
+  </form>
+  <p class="rc-why">Why it matters: alerting on how fast the budget burns pages people when users are being hurt quickly, and stays quiet otherwise. Each alert waits for a long window and a short one to agree, so a brief spike doesn't page and a fixed problem stops paging soon. The windows and rates are the starting point from <a href="https://sre.google/workbook/alerting-on-slos/">the Google SRE Workbook's chapter on alerting on SLOs</a>.</p>
+</section>
+
+<p class="rc-actions"><button type="button" class="rc-button" data-print hidden>Print this page</button></p>
+<noscript><p class="rc-hint">The calculator needs JavaScript; the formulas and examples above work without it.</p></noscript>
+</div>
+{{- $js := resources.Get "js/reliability-calculator.js" | resources.Minify | resources.Fingerprint "sha384" }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
