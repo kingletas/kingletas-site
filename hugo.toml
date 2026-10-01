@@ -41,6 +41,12 @@ Most of my day is PHP, Python and Ansible. I'm ramping up in Go, Rust and Ruby.
     weight = 10
 
   [[menu.main]]
+    identifier = "sre"
+    name = "SRE"
+    url = "/sre/"
+    weight = 15
+
+  [[menu.main]]
     identifier = "projects"
     name = "Projects"
     url = "/projects/"
