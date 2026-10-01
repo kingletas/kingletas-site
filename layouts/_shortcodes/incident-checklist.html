@@ -15,7 +15,7 @@
     <button type="button" class="rc-button" data-reset hidden>Clear everything</button>
   </p>
   <textarea class="ic-copybox" data-copybox rows="9" readonly hidden aria-label="Summary to copy"></textarea>
-  <p class="ic-hint">The clock starts with your first tick or severity choice. Everything you tick or type is kept in this browser only, so a reload doesn't lose it, and nothing is sent anywhere.</p>
+  <p class="ic-hint">The clock starts with your first tick or severity choice. Everything you tick or type, names included, stays in this browser until you press Clear everything, so a reload doesn't lose it; on a shared computer, clear it when you're done. Nothing is sent anywhere.</p>
 </div>
 
 <fieldset class="ic-group">
@@ -35,7 +35,7 @@
       <p class="ic-why" id="ic-why-update">People decide what to do from updates; silence makes them guess.</p></li>
     <li><label><input type="checkbox" data-step value="runbook" aria-describedby="ic-why-runbook" data-text="Opened the matching runbook and followed it out loud"> <span><strong>Minutes 10 to 15.</strong> Open the matching runbook and follow it out loud.</span></label> <span class="ic-stamp" data-stamp="runbook"></span>
       <p class="ic-why" id="ic-why-runbook">Runbooks hold the steps nobody remembers at 3 a.m.</p></li>
-    <li><label><input type="checkbox" data-step value="cadence" aria-describedby="ic-why-cadence" data-text="Kept the 30-minute updates going"> <span><strong>Every 30 minutes.</strong> An update, even if it says nothing has changed. Keep the promised time.</span></label> <span class="ic-stamp" data-stamp="cadence"></span>
+    <li><label><input type="checkbox" data-step value="cadence" aria-describedby="ic-why-cadence" data-text="Kept the updates going at the severity's cadence"> <span><strong>At the cadence your severity sets.</strong> An update, even if it says nothing has changed: every 30 minutes at SEV1, hourly at SEV2, at the start and the end at SEV3. Keep the promised time.</span></label> <span class="ic-stamp" data-stamp="cadence"></span>
       <p class="ic-why" id="ic-why-cadence">A missed update reads as "they have lost control".</p></li>
   </ol>
 </fieldset>
@@ -57,7 +57,7 @@
   <p>A starting point to adapt, not a standard. Raise severity freely and lower it carefully: starting high and stepping down costs a few minutes; starting low and discovering it was the top level costs the incident.</p>
   <div class="ic-sevs">
     <label class="ic-sev"><input type="radio" name="severity" value="SEV1" data-severity data-text="users cannot buy or pay, or data is being damaged or exposed"> <span><strong>SEV1.</strong> Users can't buy or pay, or data is being damaged or exposed. Everyone needed, now, any hour; updates every 30 minutes; the business owner told at once.</span></label>
-    <label class="ic-sev"><input type="radio" name="severity" value="SEV2" data-severity data-text="a major feature is down with a workaround"> <span><strong>SEV2.</strong> A revenue path is hard to complete, or a major feature is down with a workaround. On-call now, others in working hours; updates hourly.</span></label>
+    <label class="ic-sev"><input type="radio" name="severity" value="SEV2" data-severity data-text="a revenue path is hard to complete, or a major feature is down with a workaround"> <span><strong>SEV2.</strong> A revenue path is hard to complete, or a major feature is down with a workaround. On-call now, others in working hours; updates hourly.</span></label>
     <label class="ic-sev"><input type="radio" name="severity" value="SEV3" data-severity data-text="a minor feature is down, or only staff are affected"> <span><strong>SEV3.</strong> A minor feature is down, or staff are affected and customers aren't. Working hours; one update when it starts and one when it ends.</span></label>
     <label class="ic-sev"><input type="radio" name="severity" value="SEV4" data-severity data-text="nothing yet: a latent fault or lost redundancy"> <span><strong>SEV4.</strong> Nothing yet: a latent fault or lost redundancy, like one node of three down. A ticket with a date.</span></label>
   </div>
