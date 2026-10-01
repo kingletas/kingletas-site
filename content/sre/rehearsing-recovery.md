@@ -96,7 +96,7 @@ These are examples, described rather than copied from a terminal.
 **What it caught:**
 
 - **The emulator's API reported the stopped database and the stopped cache as "available".** A stop condition has to watch what the application sees, never the control plane. That's why the alarm is fed by the probe.
-- **A real writer failover will show a few seconds of errors.** Here both database instances share one container, so the failover is quiet. On a real account, the alarm's threshold has to allow for those seconds.
+- **A real writer failover means errors for a while.** Here both database instances share one container, so the failover is quiet. On AWS, reads and writes fail during a failover, and [AWS's documentation on Aurora high availability](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html) says service is "typically restored in less than 60 seconds, and often less than 30 seconds". The alarm's threshold has to allow for up to about a minute of errors.
 
 {{< seen >}}
 These are examples, described rather than copied from a terminal.
@@ -127,7 +127,7 @@ These are examples, described rather than copied from a terminal.
 - **The cloud's own backup lock and cross-account copies.** A storage bucket with a compliance-mode lock stands in, and like the real thing its retention can't be shortened.
 - **Account separation.** Here it's the emulator keeping accounts apart, not an organisation-wide policy.
 
-**What it caught:** a compliance lock can't be shortened, so keep it short. A one-day default on the whole bucket would leave a bucket nobody can delete behind on every run, so the rehearsal locks each backup for minutes and waits them out.
+**What it caught:** a compliance lock can't be shortened, so keep it short. A one-day default on the whole bucket would leave behind, on every run, a bucket nobody can delete for a day, so the rehearsal locks each backup for minutes and waits them out.
 
 {{< seen >}}
 These are examples, described rather than copied from a terminal.
