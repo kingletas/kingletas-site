@@ -1,0 +1,88 @@
+{{- /* The first-fifteen-minutes checklist. Every box, choice and field is plain
+  HTML and works without JavaScript; the script adds the clock, the time beside
+  each tick, saving in this browser only, and the copyable summary. */ -}}
+<div class="ic" data-checklist>
+
+<div class="ic-bar" data-js hidden>
+  <p class="ic-clock"><span class="ic-label">Elapsed</span> <span data-clock role="timer" aria-live="off">00:00</span> <span class="ic-started" data-started>Not started</span></p>
+  <p class="ic-actions">
+    <button type="button" class="rc-button" data-start hidden>Start the clock</button>
+    <button type="button" class="rc-button" data-copy hidden>Copy a summary for the chat</button>
+    <button type="button" class="rc-button" data-print hidden>Print</button>
+    <button type="button" class="rc-button" data-reset hidden>Clear everything</button>
+  </p>
+  <p class="ic-hint">The clock starts with your first tick. Everything you tick or type is kept in this browser only, so a reload doesn't lose it, and nothing is sent anywhere.</p>
+</div>
+
+<fieldset class="ic-group">
+  <legend><h2 id="ic-steps">The first fifteen minutes</h2></legend>
+  <ol class="ic-list">
+    <li><label><input type="checkbox" data-step value="declare" data-text="Said it out loud in one channel and opened an incident thread"> <span><strong>Minute 0.</strong> Say it out loud in one channel: "I think we have an incident: <em>what users see</em>." Open an incident channel or thread.</span></label> <span class="ic-stamp" data-stamp="declare"></span>
+      <p class="ic-why">An incident nobody has declared is several people fixing different things in private.</p></li>
+    <li><label><input type="checkbox" data-step value="commander" data-text="Named the incident commander"> <span><strong>Minute 1.</strong> Name the incident commander. If nobody else takes it, you have it.</span></label> <span class="ic-stamp" data-stamp="commander"></span>
+      <p class="ic-why">Without one person deciding, nothing gets decided.</p></li>
+    <li><label><input type="checkbox" data-step value="scribe" data-text="Named a scribe and started the timeline"> <span><strong>Minute 2.</strong> Name a scribe. Start the timeline: every action, with the time.</span></label> <span class="ic-stamp" data-stamp="scribe"></span>
+      <p class="ic-why">Memory after an incident is wrong; the timeline is the record.</p></li>
+    <li><label><input type="checkbox" data-step value="severity" data-text="Set the severity from what users cannot do"> <span><strong>Minutes 3 to 5.</strong> Set the severity from what users cannot do, not from what is broken inside.</span></label> <span class="ic-stamp" data-stamp="severity"></span>
+      <p class="ic-why">Severity decides who gets woken and how often people hear from you.</p></li>
+    <li><label><input type="checkbox" data-step value="mitigate" data-text="Stopped the damage"> <span><strong>Minutes 5 to 10.</strong> Stop the damage first: roll back, fail over, disable the feature, stop the job, or switch on maintenance mode. Explain later.</span></label> <span class="ic-stamp" data-stamp="mitigate"></span>
+      <p class="ic-why">A running fault keeps adding harm while you diagnose it.</p></li>
+    <li><label><input type="checkbox" data-step value="update" data-text="Sent the first update, with the time of the next one"> <span><strong>By minute 10.</strong> Send the first update. Promise the time of the next update, not a time for the fix.</span></label> <span class="ic-stamp" data-stamp="update"></span>
+      <p class="ic-why">People decide what to do from updates; silence makes them guess.</p></li>
+    <li><label><input type="checkbox" data-step value="runbook" data-text="Opened the matching runbook and followed it out loud"> <span><strong>Minutes 10 to 15.</strong> Open the matching runbook and follow it out loud.</span></label> <span class="ic-stamp" data-stamp="runbook"></span>
+      <p class="ic-why">Runbooks hold the steps nobody remembers at 3 a.m.</p></li>
+    <li><label><input type="checkbox" data-step value="cadence" data-text="Kept the 30-minute updates going"> <span><strong>Every 30 minutes.</strong> An update, even if it says nothing has changed. Keep the promised time.</span></label> <span class="ic-stamp" data-stamp="cadence"></span>
+      <p class="ic-why">A missed update reads as "they have lost control".</p></li>
+  </ol>
+</fieldset>
+
+<fieldset class="ic-group">
+  <legend><h2 id="ic-roles">Who holds which role</h2></legend>
+  <p>On a small team one person holds several roles. Say out loud which ones, so nobody assumes someone else has them.</p>
+  <div class="ic-roles">
+    <div class="rc-field"><label for="ic-commander">Incident commander</label><input id="ic-commander" name="commander" type="text" autocomplete="off" data-role data-text="Commander" aria-describedby="ic-commander-does"><p class="rc-hint" id="ic-commander-does">Decides, coordinates, sets severity, calls rollback or failover, owns the updates. Doesn't fix things while commanding.</p></div>
+    <div class="rc-field"><label for="ic-scribe">Scribe</label><input id="ic-scribe" name="scribe" type="text" autocomplete="off" data-role data-text="Scribe" aria-describedby="ic-scribe-does"><p class="rc-hint" id="ic-scribe-does">Writes the timeline: every step, time, finding and decision, and who made it.</p></div>
+    <div class="rc-field"><label for="ic-comms">Communications</label><input id="ic-comms" name="comms" type="text" autocomplete="off" data-role data-text="Communications" aria-describedby="ic-comms-does"><p class="rc-hint" id="ic-comms-does">The commander, until the incident is big enough to need a second person. Nothing unconfirmed goes outside.</p></div>
+    <div class="rc-field"><label for="ic-owner">Business owner</label><input id="ic-owner" name="owner" type="text" autocomplete="off" data-role data-text="Business owner" aria-describedby="ic-owner-does"><p class="rc-hint" id="ic-owner-does">Makes the business calls: accept lost orders, take the site down, fail over.</p></div>
+  </div>
+  <p class="ic-why">Everyone else is a responder: investigate and fix, saying each step out loud, and don't change production without telling the commander.</p>
+</fieldset>
+
+<fieldset class="ic-group">
+  <legend><h2 id="ic-severity">Severity, from what users cannot do</h2></legend>
+  <p>A starting point to adapt, not a standard. Raise severity freely and lower it carefully: starting high and stepping down costs a few minutes; starting low and discovering it was the top level costs the incident.</p>
+  <div class="ic-sevs">
+    <label class="ic-sev"><input type="radio" name="severity" value="SEV1" data-severity data-text="users cannot buy or pay, or data is being damaged or exposed"> <span><strong>SEV1.</strong> Users can't buy or pay, or data is being damaged or exposed. Everyone needed, now, any hour; updates every 30 minutes; the business owner told at once.</span></label>
+    <label class="ic-sev"><input type="radio" name="severity" value="SEV2" data-severity data-text="a major feature is down with a workaround"> <span><strong>SEV2.</strong> A revenue path is hard to complete, or a major feature is down with a workaround. On-call now, others in working hours; updates hourly.</span></label>
+    <label class="ic-sev"><input type="radio" name="severity" value="SEV3" data-severity data-text="a minor feature is down, or only staff are affected"> <span><strong>SEV3.</strong> A minor feature is down, or staff are affected and customers aren't. Working hours; one update when it starts and one when it ends.</span></label>
+    <label class="ic-sev"><input type="radio" name="severity" value="SEV4" data-severity data-text="nothing yet: a latent fault or lost redundancy"> <span><strong>SEV4.</strong> Nothing yet: a latent fault or lost redundancy, like one node of three down. A ticket with a date.</span></label>
+  </div>
+</fieldset>
+
+<fieldset class="ic-group">
+  <legend><h2 id="ic-questions">The first five questions</h2></legend>
+  <p>Ask them out loud, in this order, and put the answers in the timeline.</p>
+  <ol class="ic-list">
+    <li class="rc-field"><label for="ic-q1">What can users not do, and since when?</label><textarea id="ic-q1" name="q1" rows="2" data-question data-text="What can users not do, and since when?"></textarea></li>
+    <li class="rc-field"><label for="ic-q2">What changed? A deploy, a config push, a cache flush, a scheduled job, a partner's status page, a traffic spike.</label><textarea id="ic-q2" name="q2" rows="2" data-question data-text="What changed?"></textarea></li>
+    <li class="rc-field"><label for="ic-q3">Is it getting worse? Growing errors, queues or damaged records mean stopping the damage comes first.</label><textarea id="ic-q3" name="q3" rows="2" data-question data-text="Is it getting worse?"></textarea></li>
+    <li class="rc-field"><label for="ic-q4">Can we stop the damage without understanding it? Roll back, disable, fail over, stop the job, maintenance mode.</label><textarea id="ic-q4" name="q4" rows="2" data-question data-text="Can we stop the damage without understanding it?"></textarea></li>
+    <li class="rc-field"><label for="ic-q5">Who else needs to know right now? The business owner, support, a partner.</label><textarea id="ic-q5" name="q5" rows="2" data-question data-text="Who else needs to know right now?"></textarea></li>
+  </ol>
+</fieldset>
+
+<section class="ic-group" aria-labelledby="ic-update">
+  <h2 id="ic-update">The shape of an update</h2>
+  <pre class="ic-template">What happened.
+What people are seeing.
+What we know.
+What we do not know yet.
+What we are doing.
+When the next update comes.</pre>
+  <p>Confirmed and suspected never share a sentence: "Checkout is failing for card payments. We think it started with this morning's deploy and are checking." Promise the next update, not a fix time, and keep it.</p>
+</section>
+
+<noscript><p class="rc-hint">Without JavaScript the boxes still tick and print, but there's no clock, nothing is kept across a reload, and there's no summary to copy.</p></noscript>
+</div>
+{{- $js := resources.Get "js/incident-checklist.js" | resources.Minify | resources.Fingerprint "sha384" }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
