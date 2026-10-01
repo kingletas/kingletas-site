@@ -40,10 +40,10 @@ ok("the clock reads minutes and seconds, then hours", () => {
   assert.equal(c.elapsed(3723 * 1000), "1:02:03");
   assert.equal(c.elapsed(-5), "00:00");
 });
-ok("a start time reads in UTC, the same in any zone", () => assert.equal(c.utc(start), "14:02 UTC"));
+ok("a start time reads in UTC with its date, the same in any zone", () => assert.equal(c.utc(start), "2031-01-01 14:02 UTC"));
 ok("the summary pastes as plain text, in page order, with the time beside each tick", () => {
   assert.equal(c.summary(page, state, start + 7 * 60 * 1000 + 3000), [
-    "Incident checklist: 07:03 in, started 14:02 UTC",
+    "Incident checklist: 07:03 in, started 2031-01-01 14:02 UTC",
     "Severity: SEV1, users cannot buy or pay, or data is being damaged or exposed",
     "Commander: Robin. Scribe: not named.",
     "",
@@ -63,6 +63,22 @@ ok("before anything is ticked, the summary says so rather than inventing a time"
   const text = c.summary(page, blank, start);
   assert.match(text, /^Incident checklist: clock not started\nSeverity: not set yet\n/);
   assert.ok(!text.includes("Done:"));
+});
+ok("a saved state of the wrong shape loads empty instead of breaking the next tick", () => {
+  const empty = { start: null, ticks: {}, severity: "", roles: {}, answers: {} };
+  assert.deepEqual(c.normalise(null), empty);
+  assert.deepEqual(c.normalise("text"), empty);
+  assert.deepEqual(c.normalise({ start: "soon", ticks: "x", severity: 3, roles: [], answers: true }), empty);
+  const kept = c.normalise({ start: start, ticks: { declare: start }, severity: "SEV1", roles: {}, answers: {} });
+  assert.equal(kept.start, start);
+  assert.equal(kept.ticks.declare, start);
+  assert.equal(kept.severity, "SEV1");
+});
+ok("a role or answer saved as a number still summarises", () => {
+  const odd = { start: null, ticks: {}, severity: "", roles: { commander: 7 }, answers: { q2: 42 } };
+  const text = c.summary(page, odd, start);
+  assert.ok(text.includes("Commander: 7."));
+  assert.ok(text.includes("- What changed? 42"));
 });
 
 process.exit(failed);

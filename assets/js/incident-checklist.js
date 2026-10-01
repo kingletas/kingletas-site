@@ -31,9 +31,10 @@
     return h > 0 ? h + ":" + two(m) + ":" + two(s) : two(m) + ":" + two(s);
   }
 
-  /** A clock time in UTC, as 14:02 UTC, so a timeline reads the same in any zone. */
+  /** A date and time in UTC, as 2031-01-01 14:02 UTC, so a timeline reads the
+   *  same in any zone and a start left over from another day shows its date. */
   function utc(ms) {
-    return new Date(ms).toISOString().slice(11, 16) + " UTC";
+    return new Date(ms).toISOString().slice(0, 16).replace("T", " ") + " UTC";
   }
 
   /**
@@ -50,7 +51,7 @@
     const sev = page.severities.find(function (s) { return s.id === state.severity; });
     lines.push("Severity: " + (sev ? sev.label + ", " + sev.short : "not set yet"));
     const named = page.roles.map(function (r) {
-      const who = (state.roles[r.id] || "").trim();
+      const who = String(state.roles[r.id] || "").trim();
       return r.label + ": " + (who || "not named");
     });
     lines.push(named.join(". ") + ".");
@@ -67,30 +68,39 @@
       lines.push("", "Still to do:");
       open.forEach(function (s) { lines.push("- " + s.text); });
     }
-    const answered = page.questions.filter(function (q) { return (state.answers[q.id] || "").trim(); });
+    const answer = function (q) { return String(state.answers[q.id] || "").trim(); };
+    const answered = page.questions.filter(answer);
     if (answered.length) {
       lines.push("", "What we know:");
-      answered.forEach(function (q) { lines.push("- " + q.text + " " + state.answers[q.id].trim()); });
+      answered.forEach(function (q) { lines.push("- " + q.text + " " + answer(q)); });
     }
     return lines.join("\n");
+  }
+
+  /**
+   * A saved state with every field the page writes to, whatever was stored.
+   * A field of the wrong type (an older version, a hand edit) becomes empty
+   * rather than throwing on the next tick.
+   */
+  function normalise(saved) {
+    const obj = function (v) { return v && typeof v === "object" && !Array.isArray(v) ? v : {}; };
+    const s = obj(saved);
+    return {
+      start: typeof s.start === "number" ? s.start : null,
+      ticks: obj(s.ticks),
+      severity: typeof s.severity === "string" ? s.severity : "",
+      roles: obj(s.roles),
+      answers: obj(s.answers),
+    };
   }
 
   // --- the page --------------------------------------------------------------
 
   function load() {
     try {
-      const saved = JSON.parse(localStorage.getItem(KEY) || "null");
-      if (saved && typeof saved === "object") {
-        return {
-          start: saved.start || null,
-          ticks: saved.ticks || {},
-          severity: saved.severity || "",
-          roles: saved.roles || {},
-          answers: saved.answers || {},
-        };
-      }
+      return normalise(JSON.parse(localStorage.getItem(KEY) || "null"));
     } catch (e) { /* storage blocked or unreadable: start empty */ }
-    return { start: null, ticks: {}, severity: "", roles: {}, answers: {} };
+    return normalise(null);
   }
 
   function save(state) {
@@ -123,6 +133,17 @@
     const clock = root.querySelector("[data-clock]");
     const startedAt = root.querySelector("[data-started]");
     const start = root.querySelector("[data-start]");
+    const status = root.querySelector("[data-status]");
+    let quiet = null;
+
+    // One polite announcement for a screen reader, cleared after a moment so the
+    // same words can be announced again.
+    function announce(text) {
+      if (!status) return;
+      status.textContent = text;
+      clearTimeout(quiet);
+      quiet = setTimeout(function () { status.textContent = ""; }, 4000);
+    }
 
     function startClock() {
       if (!state.start) { state.start = Date.now(); save(state); }
@@ -175,7 +196,12 @@
 
     if (start) {
       start.hidden = false;
-      start.addEventListener("click", function () { startClock(); render(); });
+      start.addEventListener("click", function () {
+        if (start.getAttribute("aria-disabled") === "true") return;
+        startClock();
+        render();
+        announce("Clock started");
+      });
     }
     const reset = root.querySelector("[data-reset]");
     if (reset) {
@@ -187,17 +213,44 @@
         render();
       });
     }
+    // Copy goes to the clipboard where the browser allows it. Where it doesn't
+    // (plain http, an older browser, a refused permission), the summary is put
+    // in a box below the buttons, selected, ready to copy by hand.
     const copy = root.querySelector("[data-copy]");
-    if (copy && navigator.clipboard && window.isSecureContext) {
+    const box = root.querySelector("[data-copybox]");
+    if (copy) {
+      const label = copy.textContent;
+      const canClip = Boolean(navigator.clipboard && window.isSecureContext);
+      let restore = null;
+      const showBox = function () {
+        if (!box) return;
+        box.value = summary(page, state, Date.now());
+        box.hidden = false;
+        box.focus();
+        box.select();
+        announce("The summary is selected in the box below the buttons, ready to copy.");
+      };
+      if (!canClip) copy.textContent = "Show a summary to copy";
       copy.hidden = false;
       copy.addEventListener("click", function () {
+        if (!canClip) { showBox(); return; }
         navigator.clipboard.writeText(summary(page, state, Date.now())).then(function () {
-          const was = copy.textContent;
+          if (box) box.hidden = true;
           copy.textContent = "Copied";
-          setTimeout(function () { copy.textContent = was; }, 1500);
-        }, function () {});
+          announce("Summary copied");
+          clearTimeout(restore);
+          restore = setTimeout(function () { copy.textContent = label; }, 1500);
+        }, showBox);
       });
     }
+
+    // Another tab on this page saved: take its state, so the two don't overwrite
+    // each other's ticks.
+    window.addEventListener("storage", function (e) {
+      if (e.key !== KEY && e.key !== null) return;
+      Object.assign(state, load());
+      render();
+    });
     const print = root.querySelector("[data-print]");
     if (print) {
       print.hidden = false;
@@ -209,5 +262,5 @@
     setInterval(tick, 1000);
   }
 
-  return { elapsed: elapsed, utc: utc, summary: summary, mount: mount };
+  return { elapsed: elapsed, utc: utc, summary: summary, normalise: normalise, mount: mount };
 });

@@ -3,6 +3,7 @@
   each tick, saving in this browser only, and the copyable summary. */ -}}
 <div class="ic" data-checklist>
 
+<p class="ic-status" data-status role="status"></p>
 <div class="ic-bar" data-js hidden>
   <p class="ic-clock"><span class="ic-label">Elapsed</span> <span data-clock role="timer" aria-live="off">00:00</span> <span class="ic-started" data-started>Not started</span></p>
 </div>
@@ -13,28 +14,29 @@
     <button type="button" class="rc-button" data-print hidden>Print</button>
     <button type="button" class="rc-button" data-reset hidden>Clear everything</button>
   </p>
-  <p class="ic-hint">The clock starts with your first tick. Everything you tick or type is kept in this browser only, so a reload doesn't lose it, and nothing is sent anywhere.</p>
+  <textarea class="ic-copybox" data-copybox rows="9" readonly hidden aria-label="Summary to copy"></textarea>
+  <p class="ic-hint">The clock starts with your first tick or severity choice. Everything you tick or type is kept in this browser only, so a reload doesn't lose it, and nothing is sent anywhere.</p>
 </div>
 
 <fieldset class="ic-group">
   <legend><h2 id="ic-steps">The first fifteen minutes</h2></legend>
   <ol class="ic-list">
-    <li><label><input type="checkbox" data-step value="declare" data-text="Said it out loud in one channel and opened an incident thread"> <span><strong>Minute 0.</strong> Say it out loud in one channel: "I think we have an incident: <em>what users see</em>." Open an incident channel or thread.</span></label> <span class="ic-stamp" data-stamp="declare"></span>
-      <p class="ic-why">An incident nobody has declared is several people fixing different things in private.</p></li>
-    <li><label><input type="checkbox" data-step value="commander" data-text="Named the incident commander"> <span><strong>Minute 1.</strong> Name the incident commander. If nobody else takes it, you have it.</span></label> <span class="ic-stamp" data-stamp="commander"></span>
-      <p class="ic-why">Without one person deciding, nothing gets decided.</p></li>
-    <li><label><input type="checkbox" data-step value="scribe" data-text="Named a scribe and started the timeline"> <span><strong>Minute 2.</strong> Name a scribe. Start the timeline: every action, with the time.</span></label> <span class="ic-stamp" data-stamp="scribe"></span>
-      <p class="ic-why">Memory after an incident is wrong; the timeline is the record.</p></li>
-    <li><label><input type="checkbox" data-step value="severity" data-text="Set the severity from what users cannot do"> <span><strong>Minutes 3 to 5.</strong> Set the severity from what users cannot do, not from what is broken inside.</span></label> <span class="ic-stamp" data-stamp="severity"></span>
-      <p class="ic-why">Severity decides who gets woken and how often people hear from you.</p></li>
-    <li><label><input type="checkbox" data-step value="mitigate" data-text="Stopped the damage"> <span><strong>Minutes 5 to 10.</strong> Stop the damage first: roll back, fail over, disable the feature, stop the job, or switch on maintenance mode. Explain later.</span></label> <span class="ic-stamp" data-stamp="mitigate"></span>
-      <p class="ic-why">A running fault keeps adding harm while you diagnose it.</p></li>
-    <li><label><input type="checkbox" data-step value="update" data-text="Sent the first update, with the time of the next one"> <span><strong>By minute 10.</strong> Send the first update. Promise the time of the next update, not a time for the fix.</span></label> <span class="ic-stamp" data-stamp="update"></span>
-      <p class="ic-why">People decide what to do from updates; silence makes them guess.</p></li>
-    <li><label><input type="checkbox" data-step value="runbook" data-text="Opened the matching runbook and followed it out loud"> <span><strong>Minutes 10 to 15.</strong> Open the matching runbook and follow it out loud.</span></label> <span class="ic-stamp" data-stamp="runbook"></span>
-      <p class="ic-why">Runbooks hold the steps nobody remembers at 3 a.m.</p></li>
-    <li><label><input type="checkbox" data-step value="cadence" data-text="Kept the 30-minute updates going"> <span><strong>Every 30 minutes.</strong> An update, even if it says nothing has changed. Keep the promised time.</span></label> <span class="ic-stamp" data-stamp="cadence"></span>
-      <p class="ic-why">A missed update reads as "they have lost control".</p></li>
+    <li><label><input type="checkbox" data-step value="declare" aria-describedby="ic-why-declare" data-text="Said it out loud in one channel and opened an incident thread"> <span><strong>Minute 0.</strong> Say it out loud in one channel: "I think we have an incident: <em>what users see</em>." Open an incident channel or thread.</span></label> <span class="ic-stamp" data-stamp="declare"></span>
+      <p class="ic-why" id="ic-why-declare">An incident nobody has declared is several people fixing different things in private.</p></li>
+    <li><label><input type="checkbox" data-step value="commander" aria-describedby="ic-why-commander" data-text="Named the incident commander"> <span><strong>Minute 1.</strong> Name the incident commander. If nobody else takes it, you have it.</span></label> <span class="ic-stamp" data-stamp="commander"></span>
+      <p class="ic-why" id="ic-why-commander">Without one person deciding, nothing gets decided.</p></li>
+    <li><label><input type="checkbox" data-step value="scribe" aria-describedby="ic-why-scribe" data-text="Named a scribe and started the timeline"> <span><strong>Minute 2.</strong> Name a scribe. Start the timeline: every action, with the time.</span></label> <span class="ic-stamp" data-stamp="scribe"></span>
+      <p class="ic-why" id="ic-why-scribe">Memory after an incident is wrong; the timeline is the record.</p></li>
+    <li><label><input type="checkbox" data-step value="severity" aria-describedby="ic-why-severity" data-text="Set the severity from what users cannot do"> <span><strong>Minutes 3 to 5.</strong> Set the severity from what users cannot do, not from what is broken inside.</span></label> <span class="ic-stamp" data-stamp="severity"></span>
+      <p class="ic-why" id="ic-why-severity">Severity decides who gets woken and how often people hear from you.</p></li>
+    <li><label><input type="checkbox" data-step value="mitigate" aria-describedby="ic-why-mitigate" data-text="Stopped the damage"> <span><strong>Minutes 5 to 10.</strong> Stop the damage first: roll back, fail over, disable the feature, stop the job, or switch on maintenance mode. Explain later.</span></label> <span class="ic-stamp" data-stamp="mitigate"></span>
+      <p class="ic-why" id="ic-why-mitigate">A running fault keeps adding harm while you diagnose it.</p></li>
+    <li><label><input type="checkbox" data-step value="update" aria-describedby="ic-why-update" data-text="Sent the first update, with the time of the next one"> <span><strong>By minute 10.</strong> Send the first update. Promise the time of the next update, not a time for the fix.</span></label> <span class="ic-stamp" data-stamp="update"></span>
+      <p class="ic-why" id="ic-why-update">People decide what to do from updates; silence makes them guess.</p></li>
+    <li><label><input type="checkbox" data-step value="runbook" aria-describedby="ic-why-runbook" data-text="Opened the matching runbook and followed it out loud"> <span><strong>Minutes 10 to 15.</strong> Open the matching runbook and follow it out loud.</span></label> <span class="ic-stamp" data-stamp="runbook"></span>
+      <p class="ic-why" id="ic-why-runbook">Runbooks hold the steps nobody remembers at 3 a.m.</p></li>
+    <li><label><input type="checkbox" data-step value="cadence" aria-describedby="ic-why-cadence" data-text="Kept the 30-minute updates going"> <span><strong>Every 30 minutes.</strong> An update, even if it says nothing has changed. Keep the promised time.</span></label> <span class="ic-stamp" data-stamp="cadence"></span>
+      <p class="ic-why" id="ic-why-cadence">A missed update reads as "they have lost control".</p></li>
   </ol>
 </fieldset>
 

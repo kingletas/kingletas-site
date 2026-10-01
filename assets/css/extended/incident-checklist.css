@@ -1,8 +1,17 @@
 /* The first-fifteen-minutes checklist. Shares the calculator's field and button
    styles; colours come from the theme, so light and dark follow the site. */
 /* Only the clock line stays pinned, so it takes one line even on a phone, and the
-   scroll padding keeps a focused field from sitting underneath it. */
-html:has(.ic-bar:not([hidden])) { scroll-padding-top: 4rem; }
+   scroll margin keeps a focused control from sitting underneath it. */
+.ic input, .ic textarea, .ic button { scroll-margin-top: 6rem; }
+/* Read by a screen reader, not shown. */
+.ic-status {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.ic-copybox {
+  width: 100%; font: inherit; font-size: 0.9em; padding: 0.5rem 0.6rem; margin: 0.25rem 0 0.5rem;
+  border: 1px solid var(--tertiary); border-radius: 6px; background: var(--theme); color: var(--primary);
+}
 .ic-bar {
   position: sticky;
   top: 0;
