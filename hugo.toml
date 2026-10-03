@@ -32,10 +32,12 @@ Most of my day is PHP, Python and Ansible. I'm ramping up in Go, Rust and Ruby.
 
   [[params.socialIcons]]
     name = "github"
+    label = "GitHub"
     url = "https://github.com/kingletas"
 
   [[params.socialIcons]]
     name = "linkedin"
+    label = "LinkedIn"
     url = "https://www.linkedin.com/in/luistineo/"
 
 [menu]
