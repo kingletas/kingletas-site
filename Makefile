@@ -42,6 +42,10 @@ BASE_URL ?= https://www.kingletas.com/
 build: ## Build the site into public/ (BASE_URL=... for another address)
 	hugo --gc --minify --panicOnWarning --baseURL "$(BASE_URL)"
 
+.PHONY: share-image
+share-image: ## Regenerate static/share.png from scripts/share-card.html
+	scripts/share-image.sh
+
 .PHONY: clean
 clean: ## Remove the built site
 	rm -rf public resources/_gen .hugo_build.lock

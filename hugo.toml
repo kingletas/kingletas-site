@@ -16,6 +16,11 @@ enableRobotsTXT = true
   ShowPostNavLinks = true
   ShowCodeCopyButtons = true
   disableSpecial1stPost = true
+  # The default share image (og:image and a large-image card). A post overrides it with `images: ["its-image.png"]` in its front matter.
+  images = ["share.png"]
+
+  # TO BE WRITTEN BY THE SITE'S AUTHOR: the sentence that opens the line closing every post. The About and social links follow it.
+  closingLine = "Placeholder: a closing sentence goes here."
 
   [params.homeInfoParams]
     Title = "Hi, I'm Luis"
@@ -57,6 +62,12 @@ Most of my day is PHP, Python and Ansible. I'm ramping up in Go, Rust and Ruby.
     name = "Tags"
     url = "/tags/"
     weight = 30
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 40
 
 [markup.goldmark.renderer]
   unsafe = false
