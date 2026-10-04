@@ -16,21 +16,28 @@ enableRobotsTXT = true
   ShowPostNavLinks = true
   ShowCodeCopyButtons = true
   disableSpecial1stPost = true
+  # The default share image (og:image and a large-image card). A post overrides it with `images: ["its-image.png"]` in its front matter.
+  images = ["share.png"]
+
+  # The sentence that opens the line closing every post. The About and social links follow it.
+  closingLine = "I'm Luis Tineo, a DevOps and infrastructure leader, and I'm looking for my next team."
 
   [params.homeInfoParams]
     Title = "Hi, I'm Luis"
     Content = """
-I build and run the platform under Magento and Adobe Commerce stores: the infrastructure, the release pipeline, and the tooling that proves a deploy worked before a customer finds out it didn't. I've been working in Magento since the 1.x days.
+I'm a DevOps and infrastructure leader who still does the work. I've built DevOps teams where there were none, moved AWS out of the console and into Terraform, and replaced releases built by hand with a pipeline where rolling back is one step.
 
-Most of my day is PHP, Python and Ansible. I'm ramping up in Go, Rust and Ruby.
+Most of that has been under Magento and Adobe Commerce stores, which I've worked in since 2009. This is where I write about it: the infrastructure, the releases, and the tooling that proves a deploy worked before a customer finds out it didn't.
 """
 
   [[params.socialIcons]]
     name = "github"
+    label = "GitHub"
     url = "https://github.com/kingletas"
 
   [[params.socialIcons]]
     name = "linkedin"
+    label = "LinkedIn"
     url = "https://www.linkedin.com/in/luistineo/"
 
 [menu]
@@ -57,6 +64,12 @@ Most of my day is PHP, Python and Ansible. I'm ramping up in Go, Rust and Ruby.
     name = "Tags"
     url = "/tags/"
     weight = 30
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 40
 
 [markup.goldmark.renderer]
   unsafe = false

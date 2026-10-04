@@ -1,0 +1,8 @@
+{{- /* The closing line of a post: the author's sentence (params.closingLine), then the About page and the configured social links, each by its label when it has one. */ -}}
+{{- if eq .Section "posts" }}
+<p class="post-closing">
+  {{- with site.Params.closingLine }}{{ . }} {{ end -}}
+  {{- with site.GetPage "/about" }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end -}}
+  {{- range site.Params.socialIcons }} · <a href="{{ .url }}" rel="me noopener">{{ .label | default (.name | title) }}</a>{{ end -}}
+</p>
+{{- end }}
