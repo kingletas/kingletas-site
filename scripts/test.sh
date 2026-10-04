@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The draft gate and the preview, on invented posts, and the calculator's math. Run by check.sh.
+# The draft gate, the preview, a post's closing line and the share image, on invented posts, and the calculator's math. Run by check.sh.
 # shellcheck disable=SC2329  # the helpers below are run through ok_if, which shellcheck cannot follow
 set -uo pipefail
 
@@ -37,6 +37,16 @@ ok_if "the image beside the draft is published with it" test -n "$(find "$work/s
 left_clean() { [[ "$(git -C "$ROOT" status --porcelain)" == "$before" && ! -e "$ROOT/local.d/preview" ]]; }
 ok_if "preview leaves nothing git would list, and removes its stage" left_clean
 ok_if "preview refuses a draft inside the repository" refuses "$ROOT/scripts/preview.sh" "$ROOT/README.md" --build "$work/x"
+page="$work/site/posts/preview/an-invented-draft/index.html"
+ok_if "a post ends with the closing line" grep -q 'class="post-closing"' "$page"
+ok_if "a page's share image is share.png" grep -q 'property="og:image" content="[^"]*share\.png"' "$page"
+
+# --- share-image: a browser that writes nothing is a failure -------------------
+mkdir -p "$work/bin"
+printf '#!/bin/sh\nexit 0\n' > "$work/bin/chromium"
+chmod +x "$work/bin/chromium"
+ok_if "share-image fails when the browser writes no image" refuses env PATH="$work/bin:$PATH" "$ROOT/scripts/share-image.sh"
+ok_if "and leaves the image it had" test -z "$(git -C "$ROOT" status --porcelain -- static/share.png)"
 
 # --- new-draft: never inside the repository ----------------------------------
 ok_if "make post refuses a folder inside the repository" refuses "$ROOT/scripts/new-draft.sh" invented "$ROOT/content"
